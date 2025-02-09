@@ -24,7 +24,6 @@ public class UserEntityService {
         this.userEntityRepository = userEntityRepository;
     }
 
-    @GetMapping
     public List<UserEntityResponseDto> getAllUsers() {
         List<UserEntity> users = userEntityRepository.findAll();
         List<UserEntityResponseDto> userEntityResponseDtos = new ArrayList<>();
@@ -34,16 +33,14 @@ public class UserEntityService {
         return userEntityResponseDtos;
     }
 
-    @GetMapping("/{id}")
-    public UserEntityResponseDto getUserById(@PathVariable UUID id) {
+    public UserEntityResponseDto getUserById(UUID id) {
         UserEntity user = userEntityRepository.findById(id).orElse(null);
         if (user == null) throw new EntityNotFoundException("User not found");
 
         return new UserEntityResponseDto(user);
     }
 
-    @PostMapping
-    public UserEntity createUser(@RequestBody UserEntityRequestDto user) {
+    public UserEntity createUser(UserEntityRequestDto user) {
         UserEntity userEntity = UserEntity
                 .builder()
                 .id(UUID.randomUUID())
@@ -64,8 +61,7 @@ public class UserEntityService {
         return userEntityRepository.save(userEntity);
     }
 
-    @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable UUID id, @RequestBody UserEntityRequestDto user) {
+    public UserEntity updateUser(UUID id, UserEntityRequestDto user) {
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
         if (userEntity == null) throw new EntityNotFoundException("User not found");
 
@@ -79,12 +75,13 @@ public class UserEntityService {
         return userEntityRepository.save(userEntity);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable UUID id) {
+    public String deleteUser(UUID id) {
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
-        if (userEntity == null) throw new EntityNotFoundException("User not found");
-
+        if (userEntity == null) {
+            return "User not found";
+        }
         userEntityRepository.delete(userEntity);
+        return "User deleted";
     }
 
 }

@@ -2,7 +2,6 @@ package com.joaquinogallar.prok.controller;
 
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
-import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/users")
 public class UserEntityController {
 
@@ -50,8 +49,11 @@ public class UserEntityController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
-        userEntityService.deleteUser(id);
-        return new ResponseEntity<>("User deleted", HttpStatus.OK);
+        String message = userEntityService.deleteUser(id);
+
+        if (message.equals("User not found")) return new ResponseEntity<>(message, HttpStatus.NOT_FOUND); // 404
+
+        return new ResponseEntity<>(message, HttpStatus.OK); // 200
     }
 
 }

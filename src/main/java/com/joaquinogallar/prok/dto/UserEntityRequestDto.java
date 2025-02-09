@@ -1,7 +1,5 @@
 package com.joaquinogallar.prok.dto;
 
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
