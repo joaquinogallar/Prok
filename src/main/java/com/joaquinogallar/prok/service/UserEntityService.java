@@ -7,6 +7,7 @@ import com.joaquinogallar.prok.repository.UserEntityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class UserEntityService {
         this.userEntityRepository = userEntityRepository;
     }
 
+    @GetMapping
     public List<UserEntityResponseDto> getAllUsers() {
         List<UserEntity> users = userEntityRepository.findAll();
         List<UserEntityResponseDto> userEntityResponseDtos = new ArrayList<>();
@@ -32,20 +34,27 @@ public class UserEntityService {
         return userEntityResponseDtos;
     }
 
-    public UserEntityResponseDto getUserById(UUID id) {
+    @GetMapping("/{id}")
+    public UserEntityResponseDto getUserById(@PathVariable UUID id) {
         UserEntity user = userEntityRepository.findById(id).orElse(null);
         if (user == null) throw new EntityNotFoundException("User not found");
 
         return new UserEntityResponseDto(user);
     }
 
-    public UserEntity createUser(UserEntityRequestDto user) {
+    @PostMapping
+    public UserEntity createUser(@RequestBody UserEntityRequestDto user) {
         UserEntity userEntity = UserEntity
                 .builder()
                 .id(UUID.randomUUID())
+
+                // user information
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .email(user.getEmail())
                 .passwordHash(user.getPassword())
+
+                // default values
                 .createdAt(LocalDate.now())
                 .updatedAt(LocalDate.now())
                 .tasks(new ArrayList<>())
@@ -53,6 +62,29 @@ public class UserEntityService {
                 .build();
 
         return userEntityRepository.save(userEntity);
+    }
+
+    @PutMapping("/{id}")
+    public UserEntity updateUser(@PathVariable UUID id, @RequestBody UserEntityRequestDto user) {
+        UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
+        if (userEntity == null) throw new EntityNotFoundException("User not found");
+
+        userEntity.setFirstName(user.getFirstName());
+        userEntity.setLastName(user.getLastName());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setPasswordHash(user.getPassword());
+        userEntity.setCreatedAt(LocalDate.now());
+        userEntity.setUpdatedAt(LocalDate.now());
+
+        return userEntityRepository.save(userEntity);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable UUID id) {
+        UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
+        if (userEntity == null) throw new EntityNotFoundException("User not found");
+
+        userEntityRepository.delete(userEntity);
     }
 
 }
