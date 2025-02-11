@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
 
@@ -25,18 +27,23 @@ public class UserEntity {
     private String email;
     private String passwordHash;
 
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    @Builder.Default
+    private LocalDate createdAt = LocalDate.now();
+
+    @Builder.Default
+    private LocalDate updatedAt = LocalDate.now();
 
     @OneToMany
-    private List<Task> tasks;
+    @Builder.Default
+    private List<Task> tasks = new ArrayList<>();
 
-    private boolean enabled;
+    @Builder.Default
+    private boolean enabled = true;
 
-    public UserEntity() {
-        createdAt = LocalDate.now();
-        updatedAt = LocalDate.now();
-        enabled = true;
+    public UserEntity(String firstName, String lastName, String email, String passwordHash) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
     }
-
 }

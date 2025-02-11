@@ -43,21 +43,11 @@ public class UserEntityService {
     public UserEntity createUser(UserEntityRequestDto user) {
         UserEntity userEntity = UserEntity
                 .builder()
-                .id(UUID.randomUUID())
-
-                // user information
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .passwordHash(user.getPassword())
-
-                // default values
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .tasks(new ArrayList<>())
-                .enabled(true)
                 .build();
-
         return userEntityRepository.save(userEntity);
     }
 
