@@ -21,6 +21,7 @@ public class Task {
 
     private String title;
     private String description;
+    private int lifeCycle;
 
     private LocalDate createdAt;
     private LocalDate finishedAt;
@@ -29,7 +30,17 @@ public class Task {
 
     public Task() {
         createdAt = LocalDate.now();
-        finishedAt = LocalDate.now();
+        lifeCycle = 1;
+        status = Status.ACTIVE;
+        finishedAt = null;
+    }
+
+    public Task(String title, String description, LocalDate createdAt, LocalDate finishedAt, Status status, int lifeCycle) {
+        this.title = title;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.finishedAt = finishedAt;
+        this.status = status;
     }
 
 }

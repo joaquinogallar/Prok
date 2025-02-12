@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/users")
 public class UserEntityController {
 
-    private UserEntityService userEntityService;
+    private final UserEntityService userEntityService;
 
     @Autowired
     public UserEntityController(UserEntityService userEntityService) {
