@@ -40,7 +40,7 @@ public class UserEntityService {
         return new UserEntityResponseDto(user);
     }
 
-    public UserEntity createUser(UserEntityRequestDto user) {
+    public UserEntityResponseDto createUser(UserEntityRequestDto user) {
         UserEntity userEntity = UserEntity
                 .builder()
                 .firstName(user.getFirstName())
@@ -48,21 +48,24 @@ public class UserEntityService {
                 .email(user.getEmail())
                 .passwordHash(user.getPassword())
                 .build();
-        return userEntityRepository.save(userEntity);
+
+        userEntityRepository.save(userEntity);
+
+        return new UserEntityResponseDto(userEntity);
     }
 
-    public UserEntity updateUser(UUID id, UserEntityRequestDto user) {
+    public UserEntityResponseDto updateUser(UUID id, UserEntityRequestDto user) {
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
         if (userEntity == null) throw new EntityNotFoundException("User not found");
 
         userEntity.setFirstName(user.getFirstName());
         userEntity.setLastName(user.getLastName());
         userEntity.setEmail(user.getEmail());
-        userEntity.setPasswordHash(user.getPassword());
-        userEntity.setCreatedAt(LocalDate.now());
         userEntity.setUpdatedAt(LocalDate.now());
 
-        return userEntityRepository.save(userEntity);
+        userEntityRepository.save(userEntity);
+
+        return new UserEntityResponseDto(userEntity);
     }
 
     public String deleteUser(UUID id) {

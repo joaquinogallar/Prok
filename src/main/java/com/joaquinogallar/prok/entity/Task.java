@@ -1,5 +1,6 @@
 package com.joaquinogallar.prok.entity;
 
+import com.joaquinogallar.prok.utils.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

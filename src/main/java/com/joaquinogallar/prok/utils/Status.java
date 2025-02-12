@@ -1,4 +1,4 @@
-package com.joaquinogallar.prok.entity;
+package com.joaquinogallar.prok.utils;
 
 public enum Status {
     ACTIVE,
