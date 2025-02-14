@@ -6,6 +6,7 @@ import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.UserEntityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,12 @@ public class UserEntityService {
 
     private UserEntityRepository userEntityRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserEntityService(UserEntityRepository userEntityRepository) {
+    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserEntityResponseDto> getAllUsers() {
@@ -46,7 +50,7 @@ public class UserEntityService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .passwordHash(user.getPassword())
+                .passwordHash(passwordEncoder.encode(user.getPassword()))
                 .build();
 
         userEntityRepository.save(userEntity);
