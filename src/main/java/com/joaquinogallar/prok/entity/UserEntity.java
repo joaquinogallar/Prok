@@ -43,6 +43,8 @@ public class UserEntity {
     @Builder.Default
     private boolean enabled = true;
 
+    private Role role;
+
     public UserEntity(String firstName, String lastName, String email, String passwordHash) {
         this.firstName = firstName;
         this.lastName = lastName;

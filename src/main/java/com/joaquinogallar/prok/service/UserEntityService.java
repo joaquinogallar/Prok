@@ -22,6 +22,16 @@ public class UserEntityService {
 
     private PasswordEncoder passwordEncoder;
 
+    private String[] trimName(String fullName) {
+        String[] names = fullName.split(" ", 2);
+        String[] trimmedNames = new String[2];
+
+        trimmedNames[0] = names[0];
+        trimmedNames[1] = names.length > 1 ? names[1] : "";
+
+        return trimmedNames;
+    }
+
     @Autowired
     public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
@@ -45,10 +55,12 @@ public class UserEntityService {
     }
 
     public UserEntityResponseDto createUser(UserEntityRequestDto user) {
+        String[] trimmedNames = trimName(user.getFullName());
+
         UserEntity userEntity = UserEntity
                 .builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
+                .firstName(trimmedNames[0])
+                .lastName(trimmedNames[1])
                 .email(user.getEmail())
                 .passwordHash(passwordEncoder.encode(user.getPassword()))
                 .build();
@@ -59,11 +71,13 @@ public class UserEntityService {
     }
 
     public UserEntityResponseDto updateUser(UUID id, UserEntityRequestDto user) {
+        String[] trimmedNames = trimName(user.getFullName());
+
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
         if (userEntity == null) throw new EntityNotFoundException("User not found");
 
-        userEntity.setFirstName(user.getFirstName());
-        userEntity.setLastName(user.getLastName());
+        userEntity.setFirstName(trimmedNames[0]);
+        userEntity.setLastName(trimmedNames[1]);
         userEntity.setEmail(user.getEmail());
         userEntity.setUpdatedAt(LocalDate.now());
 

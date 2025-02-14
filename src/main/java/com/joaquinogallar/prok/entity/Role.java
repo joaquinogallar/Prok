@@ -1,6 +1,6 @@
 package com.joaquinogallar.prok.entity;
 
-public enum Roles {
+public enum Role {
     ADMIN,
     USER,
 }
