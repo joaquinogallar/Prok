@@ -8,7 +8,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ import java.util.UUID;
 @Service
 public class UserEntityService {
 
-    private UserEntityRepository userEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private String[] trimName(String fullName) {
         String[] names = fullName.split(" ", 2);
@@ -43,6 +42,7 @@ public class UserEntityService {
         List<UserEntityResponseDto> userEntityResponseDtos = new ArrayList<>();
         users.forEach(userEntity -> {
             UserEntityResponseDto userEntityResponseDto = new UserEntityResponseDto(userEntity);
+            userEntityResponseDtos.add(userEntityResponseDto);
         });
         return userEntityResponseDtos;
     }
@@ -70,7 +70,7 @@ public class UserEntityService {
         return new UserEntityResponseDto(userEntity);
     }
 
-    public UserEntityResponseDto updateUser(UUID id, UserEntityRequestDto user) {
+    public void updateUser(UUID id, UserEntityRequestDto user) {
         String[] trimmedNames = trimName(user.getFullName());
 
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
@@ -82,8 +82,6 @@ public class UserEntityService {
         userEntity.setUpdatedAt(LocalDate.now());
 
         userEntityRepository.save(userEntity);
-
-        return new UserEntityResponseDto(userEntity);
     }
 
     public String deleteUser(UUID id) {

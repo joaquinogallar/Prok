@@ -6,7 +6,6 @@ import com.joaquinogallar.prok.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,12 +35,12 @@ public class UserEntityController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserEntityRequestDto userEntityRequestDto) {
-        userEntityService.createUser(userEntityRequestDto);
-        return new ResponseEntity<>("User created", HttpStatus.CREATED);
+    public ResponseEntity<UserEntityResponseDto> createUser(@RequestBody UserEntityRequestDto userEntityRequestDto) {
+        UserEntityResponseDto user = userEntityService.createUser(userEntityRequestDto);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody UserEntityRequestDto userEntityRequestDto) {
         userEntityService.updateUser(id, userEntityRequestDto);
         return new ResponseEntity<>("User updated", HttpStatus.OK);
