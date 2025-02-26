@@ -2,6 +2,7 @@ package com.joaquinogallar.prok.service;
 
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.entity.Role;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.UserEntityRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -61,6 +62,7 @@ public class UserEntityService {
                 .builder()
                 .firstName(trimmedNames[0])
                 .lastName(trimmedNames[1])
+                .role(Role.USER)
                 .email(user.getEmail())
                 .passwordHash(passwordEncoder.encode(user.getPassword()))
                 .build();

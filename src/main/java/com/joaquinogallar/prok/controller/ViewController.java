@@ -21,31 +21,31 @@ public class ViewController {
         this.userEntityService = userEntityService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
+    @GetMapping("/auth/login")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/auth/register")
     public String register(Model model) {
         model.addAttribute("userEntityRequestDto", new UserEntityRequestDto());
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public String processRegistration(@ModelAttribute UserEntityRequestDto userEntityRequestDto, Model model) {
         try {
             UserEntityResponseDto user = userEntityService.createUser(userEntityRequestDto);
             return "redirect:/login";
         } catch (Exception e) {
-            model.addAttribute("error", "Error al registrar: " + e.getMessage());
-            model.addAttribute("userEntityRequestDto", userEntityRequestDto);
+            model.addAttribute("error", "Mail already used.");
             return "register";
         }
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 }
