@@ -22,7 +22,7 @@ public class UserEntityService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private String[] trimName(String fullName) {
+    public String[] trimName(String fullName) {
         String[] names = fullName.split(" ", 2);
         String[] trimmedNames = new String[2];
 
