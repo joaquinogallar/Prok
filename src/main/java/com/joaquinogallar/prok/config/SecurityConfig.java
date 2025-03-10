@@ -40,7 +40,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/auth/login?logout")
                         .permitAll()
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
