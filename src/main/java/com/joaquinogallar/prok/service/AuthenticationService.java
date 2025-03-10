@@ -1,6 +1,9 @@
 package com.joaquinogallar.prok.service;
 
+import com.joaquinogallar.prok.dto.LoginDto;
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
+import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.dto.UserLoginDto;
 import com.joaquinogallar.prok.entity.Role;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.UserEntityRepository;
@@ -16,18 +19,26 @@ public class AuthenticationService {
     private final UserEntityRepository userEntityRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserEntityService userEntityService;
 
     @Autowired
-    public AuthenticationService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserEntityService userEntityService) {
+    public AuthenticationService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userEntityRepository = userEntityRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.userEntityService = userEntityService;
     }
 
-    public UserEntity signUp(UserEntityRequestDto user) {
-        String[] trimmedNames = userEntityService.trimName(user.getFullName());
+    public String[] trimName(String fullName) {
+        String[] names = fullName.split(" ", 2);
+        String[] trimmedNames = new String[2];
+
+        trimmedNames[0] = names[0];
+        trimmedNames[1] = names.length > 1 ? names[1] : "";
+
+        return trimmedNames;
+    }
+
+    public UserEntityResponseDto signUp(UserEntityRequestDto user) {
+        String[] trimmedNames = trimName(user.getFullName());
         UserEntity userEntity = UserEntity
                 .builder()
                 .firstName(trimmedNames[0])
@@ -39,9 +50,19 @@ public class AuthenticationService {
 
         userEntityRepository.save(userEntity);
 
-        return userEntity;
+        return new UserEntityResponseDto(userEntity);
     }
 
+    public UserEntity authenticate(UserLoginDto userData) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userData.getEmail(),
+                        userData.getPassword()
+                )
+        );
+
+        return userEntityRepository.findByEmail(userData.getEmail()).orElseThrow();
+    }
 
 
 }

@@ -3,6 +3,7 @@ package com.joaquinogallar.prok.controller;
 
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.service.AuthenticationService;
 import com.joaquinogallar.prok.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ViewController {
 
-    private final UserEntityService userEntityService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public ViewController(UserEntityService userEntityService) {
-        this.userEntityService = userEntityService;
+    public ViewController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("/home")
@@ -26,12 +27,12 @@ public class ViewController {
         return "home";
     }
 
-    @GetMapping("/auth/login")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/auth/register")
+    @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("userEntityRequestDto", new UserEntityRequestDto());
         return "register";
@@ -40,7 +41,7 @@ public class ViewController {
     @PostMapping("/auth/register")
     public String processRegistration(@ModelAttribute UserEntityRequestDto userEntityRequestDto, Model model) {
         try {
-            UserEntityResponseDto user = userEntityService.createUser(userEntityRequestDto);
+            UserEntityResponseDto user = authenticationService.signUp(userEntityRequestDto);
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "Mail already used.");

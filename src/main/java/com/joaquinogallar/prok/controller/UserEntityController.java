@@ -33,18 +33,12 @@ public class UserEntityController {
         UserEntityResponseDto userEntity = userEntityService.getUserById(id);
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
-
-    @PostMapping
-    public ResponseEntity<UserEntityResponseDto> createUser(@RequestBody UserEntityRequestDto userEntityRequestDto) {
-        UserEntityResponseDto user = userEntityService.createUser(userEntityRequestDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
+    /*
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody UserEntityRequestDto userEntityRequestDto) {
         userEntityService.updateUser(id, userEntityRequestDto);
         return new ResponseEntity<>("User updated", HttpStatus.OK);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {

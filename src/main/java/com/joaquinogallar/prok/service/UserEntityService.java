@@ -22,16 +22,6 @@ public class UserEntityService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public String[] trimName(String fullName) {
-        String[] names = fullName.split(" ", 2);
-        String[] trimmedNames = new String[2];
-
-        trimmedNames[0] = names[0];
-        trimmedNames[1] = names.length > 1 ? names[1] : "";
-
-        return trimmedNames;
-    }
-
     @Autowired
     public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
@@ -55,23 +45,7 @@ public class UserEntityService {
         return new UserEntityResponseDto(user);
     }
 
-    public UserEntityResponseDto createUser(UserEntityRequestDto user) {
-        String[] trimmedNames = trimName(user.getFullName());
-
-        UserEntity userEntity = UserEntity
-                .builder()
-                .firstName(trimmedNames[0])
-                .lastName(trimmedNames[1])
-                .role(Role.USER)
-                .email(user.getEmail())
-                .passwordHash(passwordEncoder.encode(user.getPassword()))
-                .build();
-
-        userEntityRepository.save(userEntity);
-
-        return new UserEntityResponseDto(userEntity);
-    }
-
+    /*
     public void updateUser(UUID id, UserEntityRequestDto user) {
         String[] trimmedNames = trimName(user.getFullName());
 
@@ -85,6 +59,7 @@ public class UserEntityService {
 
         userEntityRepository.save(userEntity);
     }
+     */
 
     public String deleteUser(UUID id) {
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
