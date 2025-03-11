@@ -1,21 +1,20 @@
 package com.joaquinogallar.prok.controller;
 
-import com.joaquinogallar.prok.dto.LoginDto;
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
 import com.joaquinogallar.prok.dto.UserLoginDto;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.AuthenticationService;
 import com.joaquinogallar.prok.service.JwtService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final JwtService jwtService;
@@ -27,27 +26,45 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserEntityResponseDto> createUser(@RequestBody UserEntityRequestDto userEntityRequestDto) {
-        UserEntityResponseDto user = authenticationService.signUp(userEntityRequestDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    @GetMapping("/register")
+    public String showSignUpForm(Model model) {
+        model.addAttribute("userEntityRequestDto", new UserEntityRequestDto());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String createUser(@ModelAttribute UserEntityRequestDto userEntityRequestDto, Model model) {
+        try {
+            UserEntityResponseDto user = authenticationService.signUp(userEntityRequestDto);
+            return "redirect:/auth/login";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error during registration");
+            return "register";
+        }
+    }
+
+    @GetMapping("/login")
+    public String showSignInForm(Model model) {
+        model.addAttribute("userLoginDto", new UserLoginDto());
+        return "login";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDto> authenticate(@RequestBody UserLoginDto user) {
-        System.out.println("IN AUTHENTICATE");
+    public String authenticate(@ModelAttribute UserLoginDto user, Model model, HttpServletResponse response) {
+        try {
+            UserEntity authenticatedUser = authenticationService.authenticate(user);
+            String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        UserEntity authenticatedUser = authenticationService.authenticate(user);
+            Cookie jwtCookie = new Cookie("jwtToken", jwtToken);
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setPath("/");
+            jwtCookie.setMaxAge(3600);
+            response.addCookie(jwtCookie);
 
-        System.out.println("USER="+authenticatedUser);
-
-
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        System.out.println("TOKEN="+jwtToken);
-
-        LoginDto loginResponse = new LoginDto(jwtToken, jwtService.getExpirationTime());
-
-        return ResponseEntity.ok(loginResponse);
+            return "redirect:/home";
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid email or password");
+            return "login";
+        }
     }
 }
