@@ -1,12 +1,12 @@
 package com.joaquinogallar.prok.entity;
 
 import com.joaquinogallar.prok.utils.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 
@@ -21,26 +21,27 @@ public class Task {
 
     private String title;
     private String description;
-    private int lifeCycle;
+    private int lifeCycle = 1;
 
-    private LocalDate createdAt;
-    private LocalDate finishedAt;
+    @CreationTimestamp
+    private LocalDate createdAt = LocalDate.now();
 
-    private Status status;
+    private LocalDate finishedAt = null;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
+    private Status status = Status.ACTIVE;
 
     public Task() {
-        createdAt = LocalDate.now();
         lifeCycle = 1;
         status = Status.ACTIVE;
-        finishedAt = null;
     }
 
-    public Task(String title, String description, LocalDate createdAt, LocalDate finishedAt, Status status, int lifeCycle) {
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.createdAt = createdAt;
-        this.finishedAt = finishedAt;
-        this.status = status;
     }
 
 }

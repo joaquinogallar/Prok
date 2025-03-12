@@ -3,9 +3,12 @@ package com.joaquinogallar.prok.service;
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
 import com.joaquinogallar.prok.entity.Role;
+import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
+import com.joaquinogallar.prok.repository.TaskRepository;
 import com.joaquinogallar.prok.repository.UserEntityRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,13 @@ public class UserEntityService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final TaskRepository taskRepository;
+
     @Autowired
-    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder) {
+    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, TaskRepository taskRepository) {
         this.userEntityRepository = userEntityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.taskRepository = taskRepository;
     }
 
     public List<UserEntityResponseDto> getAllUsers() {
@@ -45,21 +51,16 @@ public class UserEntityService {
         return new UserEntityResponseDto(user);
     }
 
-    /*
-    public void updateUser(UUID id, UserEntityRequestDto user) {
-        String[] trimmedNames = trimName(user.getFullName());
+    @Transactional
+    public void createTask(UUID userId, Task task) {
+        UserEntity user = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
-        if (userEntity == null) throw new EntityNotFoundException("User not found");
+        task.setUser(user);
+        user.getTasks().add(task);
 
-        userEntity.setFirstName(trimmedNames[0]);
-        userEntity.setLastName(trimmedNames[1]);
-        userEntity.setEmail(user.getEmail());
-        userEntity.setUpdatedAt(LocalDate.now());
-
-        userEntityRepository.save(userEntity);
+        userEntityRepository.save(user);
     }
-     */
 
     public String deleteUser(UUID id) {
         UserEntity userEntity = userEntityRepository.findById(id).orElse(null);

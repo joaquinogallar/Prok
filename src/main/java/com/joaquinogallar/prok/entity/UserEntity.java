@@ -43,7 +43,7 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     private LocalDate updatedAt = LocalDate.now();
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Task> tasks = new ArrayList<>();
 

@@ -37,11 +37,30 @@
         .task-item .btn-group {
             margin-left: auto;
         }
+
+        .navbar-custom {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+        .navbar-custom .navbar-brand {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .navbar-custom .icon-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .navbar-custom .icon-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 <header>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar navbar-custom">
         <div class="container-fluid">
             <a class="navbar-brand">Prok</a>
             <a class="icon-link" th:href="@{/logout}">
@@ -53,14 +72,14 @@
 <main class="main-container">
     <section class="task-form">
         <h2 class="text-center mb-4">Add a new Task!</h2>
-        <form>
+        <form th:action="" method="post">
             <div class="mb-3">
-                <label for="task-title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="task-title" aria-describedby="emailHelp">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
-                <label for="task-description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="task-description">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" name="description" id="description">
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Create</button>
@@ -68,20 +87,24 @@
         </form>
     </section>
     <section class="task-list">
-        <h2 class="text-center mb-4">Your Tasks</h2>
-        <ul class="list-group">
+        <h2 class="text-center mb-4">Your Tasks </h2>
+        <p class="text-center" th:text="'Number of tasks: ' + ${numberOfTasks}"></p>
+        <ul class="list-group" th:each="task: ${tasks}">
             <li class="list-group-item task-item">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="firstCheckbox">
-                    <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+                    <label class="form-check-label" for="firstCheckbox" th:text="${task.title}"></label>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-danger">Delete</button>
                     <button class="btn btn-outline-primary">Update</button>
                 </div>
             </li>
-            <!-- Puedes agregar más tareas dinámicamente con Thymeleaf -->
         </ul>
+        <div class="alert alert-info text-center" role="alert" th:if="${numberOfTasks == 0}">
+            No task pending.
+        </div>
+
     </section>
 </main>
 <footer class="text-center mt-4">

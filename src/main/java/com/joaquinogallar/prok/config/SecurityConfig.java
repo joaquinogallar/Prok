@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .addLogoutHandler((request, response, authentication) -> {
