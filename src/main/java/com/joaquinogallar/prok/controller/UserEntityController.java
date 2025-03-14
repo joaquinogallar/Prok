@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/user")
 public class UserEntityController {
 
@@ -25,18 +26,21 @@ public class UserEntityController {
     }
 
     @GetMapping
+    @ResponseBody
     public ResponseEntity<List<UserEntityResponseDto>> getAllUsers() {
         List<UserEntityResponseDto> users = userEntityService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @ResponseBody
     public ResponseEntity<UserEntityResponseDto> getUserById(@PathVariable UUID id) {
         UserEntityResponseDto userEntity = userEntityService.getUserById(id);
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseBody
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
         String message = userEntityService.deleteUser(id);
 
@@ -46,10 +50,13 @@ public class UserEntityController {
     }
 
     // tasks
-    @PostMapping(value = "/{userId}/tasks", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> addTask(@PathVariable UUID userId, @RequestBody Task task) {
+    @PostMapping("/{userId}/tasks")
+    public String addTask(
+            @PathVariable UUID userId,
+            @ModelAttribute Task task
+    ) {
         userEntityService.createTask(userId, task);
-        return new ResponseEntity<>("Task created", HttpStatus.CREATED);
+        return "redirect:/home";
     }
 
 }
