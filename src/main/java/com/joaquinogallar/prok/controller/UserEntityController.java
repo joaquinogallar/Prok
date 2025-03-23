@@ -59,4 +59,9 @@ public class UserEntityController {
         return "redirect:/home";
     }
 
+    @DeleteMapping("/{userId}/tasks/{taskId}")
+    public String deleteTask(@PathVariable UUID userId, @PathVariable Long taskId) {
+        userEntityService.deleteTask(userId, taskId);
+        return "redirect:/home";
+    }
 }

@@ -96,8 +96,11 @@
                     <label class="form-check-label" for="firstCheckbox" th:text="${task.title}"></label>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-danger" th:id="${task.id}">Delete</button>
-                    <button class="btn btn-outline-primary" th:id="${task.id}">Update</button>
+                    <form th:action="@{/api/v1/user/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <button class="btn btn-danger" th:id="${'delete-' + task.id}">Delete</button>
+                    </form>
+                    <button class="btn btn-outline-primary" th:id="${'update-' + task.id}">Update</button>
                 </div>
             </li>
         </ul>

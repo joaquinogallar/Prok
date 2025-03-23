@@ -1,8 +1,6 @@
 package com.joaquinogallar.prok.service;
 
-import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
-import com.joaquinogallar.prok.entity.Role;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.TaskRepository;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -58,6 +55,16 @@ public class UserEntityService {
 
         task.setUser(user);
         user.getTasks().add(task);
+
+        userEntityRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteTask(UUID userId, Long taskId) {
+        UserEntity user = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        user.getTasks().remove(taskRepository.findById(taskId).orElse(null));
 
         userEntityRepository.save(user);
     }
