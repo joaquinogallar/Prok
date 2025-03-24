@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,15 +54,22 @@ public class UserEntityController {
     @PostMapping("/{userId}/tasks")
     public String addTask(
             @PathVariable UUID userId,
-            @ModelAttribute Task task
+            @ModelAttribute Task task,
+            RedirectAttributes redirectAttributes
     ) {
         userEntityService.createTask(userId, task);
+        redirectAttributes.addFlashAttribute("successMessage", "Task created successfully");
         return "redirect:/home";
     }
 
     @DeleteMapping("/{userId}/tasks/{taskId}")
-    public String deleteTask(@PathVariable UUID userId, @PathVariable Long taskId) {
+    public String deleteTask(
+            @PathVariable UUID userId,
+            @PathVariable Long taskId,
+            RedirectAttributes redirectAttributes
+    ) {
         userEntityService.deleteTask(userId, taskId);
+        redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully");
         return "redirect:/home";
     }
 }

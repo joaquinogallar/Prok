@@ -50,6 +50,10 @@ public class UserEntityService {
 
     @Transactional
     public void createTask(UUID userId, Task task) {
+        if(task.getTitle() == null || task.getTitle().isEmpty()) {
+            return;
+        }
+
         UserEntity user = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 

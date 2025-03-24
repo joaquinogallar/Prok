@@ -56,6 +56,33 @@
         .navbar-custom .icon-link:hover {
             text-decoration: underline;
         }
+
+        /* close success message */
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            position: relative;
+        }
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #3c763d;
+        }
+        .close-btn:hover {
+            color
     </style>
 </head>
 <body>
@@ -86,6 +113,10 @@
             </div>
         </form>
     </section>
+    <div id="successMessage" th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+        <button onclick="closeMessage()" class="close-btn">&times;</button>
+    </div>
     <section class="task-list">
         <h2 class="text-center mb-4">Your Tasks </h2>
         <p class="text-center" th:text="'Number of tasks: ' + ${numberOfTasks}"></p>
@@ -113,5 +144,20 @@
 <footer class="text-center mt-4">
     &copy; Coded by <a href="https://joaquinogallar.github.io/" target="_blank">Joaquin Ogallar</a>
 </footer>
+<script>
+    setTimeout(function() {
+        let message = document.getElementById("successMessage");
+        if (message) {
+            message.style.display = "none";
+        }
+    }, 2000);
+
+    function closeMessage() {
+        let message = document.getElementById("successMessage");
+        if (message) {
+            message.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>
