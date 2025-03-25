@@ -44,4 +44,17 @@ public class ViewController {
         return "home";
     }
 
+    @GetMapping("/user")
+    public String user(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        if (authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            model.addAttribute("user", user);
+        }
+
+        return "userProfile";
+    }
+
 }

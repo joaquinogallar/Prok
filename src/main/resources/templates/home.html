@@ -90,9 +90,14 @@
     <nav class="navbar navbar-custom">
         <div class="container-fluid">
             <a class="navbar-brand">Prok</a>
-            <a class="icon-link" th:href="@{/logout}">
-                Logout
-            </a>
+            <div>
+                <a class="icon-link" th:href="@{/logout}">
+                    Logout
+                </a>
+                <a class="icon-link" th:href="@{/user}">
+                    My Account
+                </a>
+            </div>
         </div>
     </nav>
 </header>
