@@ -67,7 +67,7 @@
       <div class="card stats-card bg-primary text-white">
         <div class="card-body">
           <h5 class="card-title">Total Tasks</h5>
-          <h2 class="card-text" id="totalTasks">0</h2>
+          <h2 class="card-text" id="totalTasks" th:text="${numberOfTasks}"></h2>
           <p class="card-text"><small>Since <span id="memberSince" th:text="${user.getCreatedAt()}"></span></small></p>
         </div>
       </div>

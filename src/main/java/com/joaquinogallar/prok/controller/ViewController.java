@@ -51,6 +51,7 @@ public class ViewController {
 
         if (authentication.isAuthenticated()) {
             String username = authentication.getName();
+            model.addAttribute("numberOfTasks", taskService.getTasksByUser(user.getId()).size());
             model.addAttribute("user", user);
         }
 
