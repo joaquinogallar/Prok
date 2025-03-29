@@ -50,9 +50,12 @@ public class ViewController {
         UserEntity user = (UserEntity) authentication.getPrincipal();
 
         if (authentication.isAuthenticated()) {
+            List<Task> userTasks = taskService.getTasksByUser(user.getId());
             String username = authentication.getName();
+
             model.addAttribute("numberOfTasks", taskService.getTasksByUser(user.getId()).size());
             model.addAttribute("user", user);
+            model.addAttribute("tasks", userTasks);
         }
 
         return "userProfile";
