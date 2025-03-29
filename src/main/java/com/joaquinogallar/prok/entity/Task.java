@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Data
@@ -44,4 +45,8 @@ public class Task {
         this.description = description;
     }
 
+    public boolean isFromLast3Days() {
+        long daysBetween = ChronoUnit.DAYS.between(this.createdAt, LocalDate.now());
+        return daysBetween <= 3;
+    }
 }
