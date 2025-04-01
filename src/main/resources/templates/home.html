@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home</title>
+    <link th:href="@{/css/styles.css?v=1.0}" rel="stylesheet">
     <!-- Bootstrap CSS (CDN) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             background-color: #f8f9fa;
+        }
+        .hidden {
+            display: none;
+        }
+        .bg-filter {
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, .3);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 80;
         }
         .main-container {
             max-width: 800px;
@@ -16,10 +30,21 @@
             padding: 20px;
         }
         .task-form {
+            z-index: 90;
+            width: 80%;
+            max-width: 600px;
+            height: 40%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 500ms ease-in-out;
         }
         .task-list {
             margin-top: 20px;
@@ -100,7 +125,12 @@
     </nav>
 </header>
 <main class="main-container">
-    <section class="task-form">
+    <div class="bg-filter hidden"></div>
+    <button id="open-create-class-form-btn" class="btn btn-primary center">Create Task</button>
+    <section class="task-form hidden">
+        <button id="close-create-class-form-btn" class="btn btn-outline-danger">
+            <i class="fas fa-xmark"></i>
+        </button>
         <h2 class="text-center mb-4">Add a new Task!</h2>
         <form th:action="@{/api/v1/user/{userId}/tasks(userId=${userId})}" method="post">
             <div class="mb-3">
@@ -161,6 +191,22 @@
             message.style.display = "none";
         }
     }
+
+    // create task button handler
+    let $openCreateTaskFormBtn = document.getElementById('open-create-class-form-btn');
+    let $closeCreateTaskFormBtn = document.getElementById('close-create-class-form-btn');
+    let $taskFrom = document.querySelector('.task-form');
+    let $bgFilter = document.querySelector('.bg-filter');
+
+    $openCreateTaskFormBtn.addEventListener("click", () => {
+        $taskFrom.classList.remove('hidden');
+        $bgFilter.classList.remove('hidden');
+    })
+
+    $closeCreateTaskFormBtn.addEventListener("click", () => {
+        $taskFrom.classList.add('hidden');
+        $bgFilter.classList.add('hidden');
+    })
 </script>
 </body>
 </html>
