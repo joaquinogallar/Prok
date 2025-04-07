@@ -85,4 +85,9 @@ public class TaskService {
         return user.getTasks();
     }
 
+    public List<Task> getFinishedTasksByUser(UUID idUser) {
+        List<Task> tasks = taskRepository.findByUserIdAndFinishedAtIsNotNull(idUser);
+        return tasks;
+    }
+
 }

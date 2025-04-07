@@ -156,8 +156,9 @@
         <ul class="list-group" th:each="task: ${tasks}">
             <li class="list-group-item task-item">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="firstCheckbox">
-                    <label class="form-check-label" for="firstCheckbox" th:text="${task.title}"></label>
+                    <input th:if="${(task.getFinishedAt() == null)}" class="form-check-input" type="checkbox" value="" th:id="${'checkbox_' + task.id}">
+                    <input th:if="${!(task.getFinishedAt() == null)}" class="form-check-input" type="checkbox" value="" th:id="${'checkbox_' + task.id}" checked>
+                    <label class="form-check-label" th:for="${'checkbox_' + task.id}" th:text="${task.title}"></label>
                 </div>
                 <div class="btn-group">
                     <form th:action="@{/api/v1/user/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">

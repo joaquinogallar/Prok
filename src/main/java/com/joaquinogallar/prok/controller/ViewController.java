@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ViewController {
@@ -53,11 +54,15 @@ public class ViewController {
 
         if (authentication.isAuthenticated()) {
             List<Task> userTasks = taskService.getTasksByUser(user.getId());
+            List<Task> userFinishedTasks = taskService.getFinishedTasksByUser(user.getId());
+
+
             String username = authentication.getName();
 
             model.addAttribute("numberOfTasks", taskService.getTasksByUser(user.getId()).size());
             model.addAttribute("user", user);
             model.addAttribute("tasks", userTasks);
+            model.addAttribute("tasksFinished", userFinishedTasks);
         }
 
         return "userProfile";

@@ -50,14 +50,14 @@
       </div>
       <div class="user-info-container col-md-6" id="user-info">
         <h1 class="mb-1" id="userFullName" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
-        <div class="input-group input-group-lg hidden" id="form-edit-user-info">
+        <form th:action="@{/api/v1/user}" method="post" class="input-group input-group-lg hidden" id="form-edit-user-info">
           <input class="mb-1 form-control" th:value="${user.getFirstName()} + ' ' + ${user.getLastName()}">
           <button class="btn btn-outline-success input-group-text"><i class="fa-solid fa-check"></i></button>
           <button id="close-create-class-form-btn" class="btn btn-outline-danger"><i class="fas fa-xmark"></i></button>
-        </div>
-        <p class="text-muted mb-2" id="userRole" th:text="${user.getRole()}"><i class="fas fa-user-tag me-2"></i></p>
-        <p class="text-muted mb-2" id="userEmail" th:text="${user.getEmail()}"><i class="fas fa-envelope me-2"></i></p>
-        <p class="text-muted" id="userStatus" th:if="${user.isEnabled()}" th:text="'Active account'"><i class="fas fa-circle me-2 text-success"></i></p>
+        </form>
+        <p class="text-muted mb-2" id="userRole" th:value="${user.getRole()}" th:text="${user.getRole()}"><i class="fas fa-user-tag me-2"></i></p>
+        <p class="text-muted mb-2" id="userEmail" th:value="${user.getEmail()}" th:text="${user.getEmail()}"><i class="fas fa-envelope me-2"></i></p>
+        <p class="text-muted" id="userStatus" th:value="${user.isEnabled()}" th:if="${user.isEnabled()}" th:text="'Active account'"><i class="fas fa-circle me-2 text-success"></i></p>
       </div>
       <div class="col-md-4 text-md-end mt-3 mt-md-0">
         <button class="btn btn-outline-primary me-2" id="edit-user-info-btn">
@@ -84,7 +84,7 @@
       <div class="card stats-card bg-success text-white">
         <div class="card-body">
           <h5 class="card-title">Completed</h5>
-          <h2 class="card-text" id="completedTasks">0</h2>
+          <h2 class="card-text" id="completedTasks" th:text="${tasksFinished.size()}"></h2>
           <p class="card-text"><small th:text="'% completed'"></small></p>
         </div>
       </div>
