@@ -63,8 +63,13 @@ public class TaskService {
         Task task = taskRepository.findById(id).orElse(null);
         if (task == null) throw new EntityNotFoundException("Task not found");
 
-        task.setStatus(Status.FINISHED);
-        task.setFinishedAt(LocalDate.now());
+        if(task.getFinishedAt() != null) {
+            task.setStatus(Status.ACTIVE);
+            task.setFinishedAt(null);
+        } else {
+            task.setStatus(Status.FINISHED);
+            task.setFinishedAt(LocalDate.now());
+        }
         taskRepository.save(task);
     }
 
