@@ -65,6 +65,7 @@ public class TaskService {
 
         task.setStatus(Status.FINISHED);
         task.setFinishedAt(LocalDate.now());
+        taskRepository.save(task);
     }
 
     public void reDoTask(Long id) {
