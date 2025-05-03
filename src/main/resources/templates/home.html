@@ -127,7 +127,7 @@
 <main class="main-container">
     <div class="bg-filter hidden"></div>
     <button id="open-create-class-form-btn" class="btn btn-primary center">Create Task</button>
-    <section class="task-form hidden">
+    <section class="task-form task-create-form hidden">
         <button id="close-create-class-form-btn" class="btn btn-outline-danger">
             <i class="fas fa-xmark"></i>
         </button>
@@ -188,6 +188,31 @@
         </div>
 
     </section>
+    <section class="task-form task-update-form hidden">
+        <button id="close-update-class-form-btn" class="btn btn-outline-danger">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <h2 class="text-center mb-4">Update task!</h2>
+        <form th:action="@{/api/v1/user/{userId}/tasks(userId=${userId})}" method="post">
+            <input type="hidden" name="_method" value="update">
+            <div class="mb-3">
+                <label for="title" class="form-label">Id</label>
+                <input class="form-control" name="id" value="1" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" name="description">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </section>
+
 </main>
 <footer class="text-center mt-4">
     &copy; Coded by <a href="https://joaquinogallar.github.io/" target="_blank">Joaquin Ogallar</a>
@@ -210,7 +235,7 @@
     // create task button handler
     let $openCreateTaskFormBtn = document.getElementById('open-create-class-form-btn');
     let $closeCreateTaskFormBtn = document.getElementById('close-create-class-form-btn');
-    let $taskFrom = document.querySelector('.task-form');
+    let $taskFrom = document.querySelector('.task-create-form');
     let $bgFilter = document.querySelector('.bg-filter');
 
     $openCreateTaskFormBtn.addEventListener("click", () => {
@@ -220,6 +245,23 @@
 
     $closeCreateTaskFormBtn.addEventListener("click", () => {
         $taskFrom.classList.add('hidden');
+        $bgFilter.classList.add('hidden');
+    })
+
+    // update task button handler
+    const $openUpdateTaskFormBtns = document.querySelectorAll('[id^="update-"]');
+    const $closeUpdateTaskFromBtn = document.getElementById('close-update-class-form-btn');
+    const $taskUpdateForm = document.querySelector(".task-update-form")
+
+    $openUpdateTaskFormBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            $taskUpdateForm.classList.remove('hidden');
+            $bgFilter.classList.remove('hidden');
+        })
+    })
+
+    $closeUpdateTaskFromBtn.addEventListener("click", () => {
+        $taskUpdateForm.classList.add('hidden');
         $bgFilter.classList.add('hidden');
     })
 </script>
