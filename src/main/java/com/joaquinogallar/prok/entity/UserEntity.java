@@ -59,6 +59,7 @@ public class UserEntity implements UserDetails {
         this.passwordHash = passwordHash;
     }
 
+    // --------------------------------------------------------------------------------------------------
     // authentication
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

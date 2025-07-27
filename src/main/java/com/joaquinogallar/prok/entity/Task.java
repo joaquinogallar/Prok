@@ -5,15 +5,17 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Task {
 
     @Id
@@ -34,11 +36,6 @@ public class Task {
     private UserEntity user;
 
     private Status status = Status.ACTIVE;
-
-    public Task() {
-        lifeCycle = 1;
-        status = Status.ACTIVE;
-    }
 
     public Task(String title, String description) {
         this.title = title;

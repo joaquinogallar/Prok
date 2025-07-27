@@ -6,7 +6,7 @@ import com.joaquinogallar.prok.repository.TaskRepository;
 import com.joaquinogallar.prok.repository.UserEntityRepository;
 import com.joaquinogallar.prok.utils.Status;
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.catalina.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +36,12 @@ public class TaskService {
         return task;
     }
 
+    @Transactional
     public Task createTask(Task task) {
         return taskRepository.save(task);
     }
 
+    @Transactional
     public Task updateTask(Long id, Task task) {
         Task taskToUpdate = taskRepository.findById(id).orElse(null);
         if (taskToUpdate == null) throw new EntityNotFoundException("Task not found");
@@ -52,16 +54,16 @@ public class TaskService {
 
     public String deleteTask(Long id) {
         Task taskToDelete = taskRepository.findById(id).orElse(null);
-        if (taskToDelete == null) return "Task not found";
+        if (taskToDelete == null) throw new EntityNotFoundException("Task not found");
 
         taskRepository.delete(taskToDelete);
 
         return "Task deleted";
     }
 
+    @Transactional
     public void markTaskAsCompleted(Long id) {
-        Task task = taskRepository.findById(id).orElse(null);
-        if (task == null) throw new EntityNotFoundException("Task not found");
+        Task task = taskRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         if(task.getFinishedAt() != null) {
             task.setStatus(Status.ACTIVE);
@@ -73,15 +75,14 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public void reDoTask(Long id) {
-        Task task = taskRepository.findById(id).orElse(null);
-        if (task == null) throw new EntityNotFoundException("Task not found");
+    public void redoTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         Task newTask = new Task(task.getTitle(), task.getDescription());
         newTask.setLifeCycle(task.getLifeCycle() + 1);
 
-        taskRepository.save(newTask);
         taskRepository.delete(task);
+        taskRepository.save(newTask);
     }
 
     public List<Task> getTasksByUser(UUID idUser) {
@@ -92,8 +93,7 @@ public class TaskService {
     }
 
     public List<Task> getFinishedTasksByUser(UUID idUser) {
-        List<Task> tasks = taskRepository.findByUserIdAndFinishedAtIsNotNull(idUser);
-        return tasks;
+        return taskRepository.findByUserIdAndFinishedAtIsNotNull(idUser);
     }
 
 }
