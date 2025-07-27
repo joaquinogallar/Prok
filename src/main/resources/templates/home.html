@@ -131,8 +131,9 @@
         <button id="close-create-class-form-btn" class="btn btn-outline-danger">
             <i class="fas fa-xmark"></i>
         </button>
+        <!-- Handle new task creation -->
         <h2 class="text-center mb-4">Add a new Task!</h2>
-        <form th:action="@{/api/v1/user/{userId}/tasks(userId=${userId})}" method="post">
+        <form th:action="@{/api/v1/users/{userId}/tasks(userId=${userId})}" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
@@ -151,11 +152,12 @@
         <button onclick="closeMessage()" class="close-btn">&times;</button>
     </div>
     <section class="task-list">
+        <!-- Show tasks -->
         <h2 class="text-center mb-4">Your Tasks </h2>
         <p class="text-center" th:text="'Number of tasks: ' + ${numberOfTasks}"></p>
         <ul class="list-group" th:each="task: ${tasks}">
             <li class="list-group-item task-item">
-                <form class="form-check" th:action="@{/api/v1/task/{taskId}/completed(taskId=${task.id})}" th:method="post">
+                <form class="form-check" th:action="@{/{taskId}/completed(taskId=${task.id})}" th:method="post">
                     <input type="hidden" name="_method" value="put">
                     <input th:if="${(task.getFinishedAt() == null)}"
                            class="form-check-input"
@@ -175,7 +177,7 @@
                     <label class="form-check-label" th:for="${'checkbox_' + task.id}" th:text="${task.title}"></label>
                 </form>
                 <div class="btn-group">
-                    <form th:action="@{/api/v1/user/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
+                    <form th:action="@{/api/v1/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
                         <input type="hidden" name="_method" value="delete">
                         <button class="btn btn-danger" th:id="${'delete-' + task.id}">Delete</button>
                     </form>
@@ -192,8 +194,9 @@
         <button id="close-update-class-form-btn" class="btn btn-outline-danger">
             <i class="fas fa-xmark"></i>
         </button>
+        <!-- Handle task update -->
         <h2 class="text-center mb-4">Update task!</h2>
-        <form th:action="@{/api/v1/user/{userId}/tasks(userId=${userId})}" method="post">
+        <form th:action="@{/{userId}/tasks(userId=${userId})}" method="post">
             <input type="hidden" name="_method" value="update">
             <div class="mb-3">
                 <label for="title" class="form-label">Id</label>

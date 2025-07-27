@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1/task")
+@RequestMapping("/api/v1/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -51,9 +51,4 @@ public class TaskController {
         return ResponseEntity.ok(res);
     }
 
-    @PutMapping("/{taskId}/completed")
-    public String markTaskAsCompleted(@PathVariable Long taskId) {
-        taskService.markTaskAsCompleted(taskId);
-        return "redirect:/home";
-    }
 }
