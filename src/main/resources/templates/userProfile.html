@@ -8,36 +8,188 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    body {
+      background: linear-gradient(135deg, #1c1c1c 0%, #2c2c2c 100%);
+      color: #d0d0d0;
+      font-family: 'Inter', sans-serif;
+    }
+    .container {
+      max-width: 1200px;
+      padding: 2rem;
+    }
+    .profile-header {
+      margin-bottom: 2rem;
+    }
+    .profile-pic {
+      border-radius: 50%;
+      border: 2px solid #444444;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .user-info-container h1 {
+      color: #f0f0f0;
+      font-weight: 600;
+    }
+    .text-muted {
+      color: #999999 !important;
+    }
+    .btn-outline-primary {
+      border-color: #4a4a4a;
+      color: #d0d0d0;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-outline-primary:hover {
+      background-color: #4a4a4a;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+    .btn-outline-secondary {
+      border-color: #444444;
+      color: #d0d0d0;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-outline-secondary:hover {
+      background-color: #444444;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+    .btn-outline-success {
+      border-color: #2d4a2d;
+      color: #d0f0d0;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-outline-success:hover {
+      background-color: #2d4a2d;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+    .btn-outline-danger {
+      border-color: #4a2d2d;
+      color: #f0d0d0;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-outline-danger:hover {
+      background-color: #4a2d2d;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+    .card {
+      background-color: #2a2a2a;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card-header {
+      background-color: #2a2a2a;
+      border-bottom: 1px solid #444444;
+      color: #f0f0f0;
+      font-weight: 500;
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .stats-card {
+      border-radius: 12px;
+    }
+    .stats-card.bg-primary {
+      background-color: #4a4a4a !important;
+    }
+    .stats-card.bg-success {
+      background-color: #2d4a2d !important;
+    }
+    .stats-card.bg-warning {
+      background-color: #4a4a2d !important;
+      color: #d0d0d0 !important;
+    }
+    .stats-card.bg-danger {
+      background-color: #4a2d2d !important;
+    }
+    .card-title {
+      color: #d0d0d0;
+      font-weight: 500;
+    }
+    .card-text {
+      color: #f0f0f0;
+    }
+    .form-control {
+      background-color: #333333;
+      border: 1px solid #444444;
+      color: #d0d0d0;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-control:focus {
+      background-color: #333333;
+      border-color: #666666;
+      box-shadow: 0 0 0 0.25rem rgba(102, 102, 102, 0.25);
+      color: #d0d0d0;
+    }
+    .form-control::placeholder {
+      color: #999999;
+    }
+    .input-group-text {
+      background-color: #333333;
+      border: 1px solid #444444;
+      color: #d0d0d0;
+    }
+    .table {
+      color: #d0d0d0;
+      --bs-table-bg: transparent;
+    }
+    .table th {
+      color: #f0f0f0;
+      font-weight: 500;
+    }
+    .table td {
+      color: #d0d0d0;
+    }
+    .badge.bg-success {
+      background-color: #2d4a2d !important;
+    }
+    .badge.bg-warning {
+      background-color: #4a4a2d !important;
+      color: #d0d0d0 !important;
+    }
+    .list-group-item {
+      background-color: #2a2a2a;
+      border: 1px solid #444444;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      padding: 1.5rem;
+      color: #d0d0d0;
+      transition: transform 0.3s ease;
+    }
+    .list-group-item:hover {
+      transform: translateY(-3px);
+    }
+    .card-footer {
+      background-color: #2a2a2a;
+      border-top: 1px solid #444444;
+    }
     .hidden {
       display: none;
     }
-    .profile-header {
-      background-color: #f8f9fa;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .stats-card {
-      border-radius: 10px;
-      transition: transform 0.3s;
-    }
-    .stats-card:hover {
-      transform: translateY(-5px);
-    }
-    .task-item {
-      border-left: 4px solid #0d6efd;
-      transition: all 0.3s;
-    }
-    .task-item:hover {
-      background-color: #f8f9fa;
+    @media (max-width: 576px) {
+      .container {
+        padding: 1rem;
+      }
+      .profile-pic {
+        width: 100px;
+        height: 100px;
+      }
+      .user-info-container h1 {
+        font-size: 1.5rem;
+      }
+      .card-body {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
@@ -46,7 +198,7 @@
   <div class="profile-header">
     <div class="row align-items-center">
       <div class="col-md-2 text-center">
-        <img th:src="'https://ui-avatars.com/api/?name=' + ${user.getFirstName()} + '+' + ${user.getLastName()} + '&background=0D8ABC&color=fff&size=150'" alt="Foto de perfil" class="profile-pic mb-3">
+        <img th:src="'https://ui-avatars.com/api/?name=' + ${user.getFirstName()} + '+' + ${user.getLastName()} + '&background=4a4a4a&color=d0d0d0&size=150'" alt="Foto de perfil" class="profile-pic mb-3">
       </div>
       <div class="user-info-container col-md-6" id="user-info">
         <h1 class="mb-1" id="userFullName" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
@@ -112,8 +264,8 @@
   <div class="row">
     <div class="col-md-6 mb-4">
       <div class="card">
-        <div class="card-header bg-white">
-          <h5 class="mb-0"><i class="fas fa-info-circle me-2 text-primary"></i>User Information</h5>
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>User Information</h5>
         </div>
         <div class="card-body">
           <table class="table table-borderless">
@@ -158,10 +310,9 @@
 
     <div class="col-md-6 mb-4">
       <div class="card">
-        <div class="card-header bg-white">
-          <h5 class="mb-0"><i class="fas fa-tasks me-2 text-primary"></i>Recent Tasks</h5>
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Recent Tasks</h5>
         </div>
-
         <div class="card-body p-0">
           <ul th:each="task: ${tasks}" class="list-group list-group-flush" id="tasksList">
             <li th:if="${task.isFromLast3Days()}" class="list-group-item task-item">
@@ -176,8 +327,7 @@
             </li>
           </ul>
         </div>
-
-        <div class="card-footer bg-white text-end">
+        <div class="card-footer text-end">
           <a href="/home" class="btn btn-sm btn-outline-primary">View all tasks</a>
         </div>
       </div>
@@ -189,23 +339,21 @@
   let $configUserBtn = document.getElementById('config-user-btn');
   let $formEditUserInfo = document.getElementById('form-edit-user-info');
   let $userInfo = document.getElementById('userFullName');
-
-  let $closeCreateClassFormBtn = document.getElementById('close-create-class-form-btn')
+  let $closeCreateClassFormBtn = document.getElementById('close-create-class-form-btn');
 
   $editUserInfoBtn.addEventListener("click", () => {
-    $userInfo.classList.add('hidden')
-    $formEditUserInfo.classList.remove('hidden')
-    $editUserInfoBtn.classList.add('hidden')
-    $configUserBtn.classList.add('hidden')
-  })
+    $userInfo.classList.add('hidden');
+    $formEditUserInfo.classList.remove('hidden');
+    $editUserInfoBtn.classList.add('hidden');
+    $configUserBtn.classList.add('hidden');
+  });
 
   $closeCreateClassFormBtn.addEventListener("click", () => {
-    $userInfo.classList.remove('hidden')
-    $formEditUserInfo.classList.add('hidden')
-    $editUserInfoBtn.classList.remove('hidden')
-    $configUserBtn.classList.remove('hidden')
-  })
-
+    $userInfo.classList.remove('hidden');
+    $formEditUserInfo.classList.add('hidden');
+    $editUserInfoBtn.classList.remove('hidden');
+    $configUserBtn.classList.remove('hidden');
+  });
 </script>
 </body>
 </html>
