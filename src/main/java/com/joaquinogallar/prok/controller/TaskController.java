@@ -1,5 +1,6 @@
 package com.joaquinogallar.prok.controller;
 
+import com.joaquinogallar.prok.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class TaskController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskUpdateDto task) {
         return ResponseEntity.ok(taskService.updateTask(id, task));
     }
 

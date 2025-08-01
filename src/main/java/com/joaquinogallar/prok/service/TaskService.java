@@ -1,5 +1,6 @@
 package com.joaquinogallar.prok.service;
 
+import com.joaquinogallar.prok.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.TaskRepository;
@@ -42,12 +43,12 @@ public class TaskService {
     }
 
     @Transactional
-    public Task updateTask(Long id, Task task) {
+    public Task updateTask(Long id, TaskUpdateDto task) {
         Task taskToUpdate = taskRepository.findById(id).orElse(null);
         if (taskToUpdate == null) throw new EntityNotFoundException("Task not found");
 
-        taskToUpdate.setTitle(task.getTitle());
-        taskToUpdate.setDescription(task.getDescription());
+        taskToUpdate.setTitle(task.title());
+        taskToUpdate.setDescription(task.description());
 
         return taskRepository.save(taskToUpdate);
     }
