@@ -33,8 +33,9 @@
         <button id="close-create-class-form-btn" class="btn btn-outline-danger">
             <i class="fas fa-xmark"></i>
         </button>
+        <!-- START ADD -->
         <h2 class="text-center mb-4">Add a new Task!</h2>
-        <form th:action="@{/api/v1/users/{userId}/tasks(userId=${userId})}" method="post">
+        <form th:action="@{/users/{userId}/tasks(userId=${userId})}" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
@@ -47,6 +48,7 @@
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
+        <!-- END ADD -->
     </section>
     <!--/*@thymesVar id="successMessage" type=""*/-->
     <div id="successMessage" th:if="${successMessage}" class="alert alert-success">

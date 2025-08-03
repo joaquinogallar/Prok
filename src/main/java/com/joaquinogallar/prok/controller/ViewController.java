@@ -50,10 +50,4 @@ public class ViewController {
         return "home";
     }
 
-    @PutMapping("/{taskId}/completed")
-    public String markTaskAsCompleted(@PathVariable Long taskId) {
-        taskService.markTaskAsCompleted(taskId);
-        return "redirect:/home";
-    }
-
 }

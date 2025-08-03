@@ -52,9 +52,7 @@ public class UserEntityController {
     @ResponseBody
     public ResponseEntity<?> addTask(
             @PathVariable UUID userId,
-            @ModelAttribute Task task,
-            RedirectAttributes redirectAttributes
-    ) {
+            @ModelAttribute Task task) {
         userEntityService.createTask(userId, task);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
