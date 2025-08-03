@@ -85,7 +85,7 @@
                     <button class="btn btn-outline-primary" th:id="${'update-' + task.id}">Update</button>
                 </div>
                 <div class="task-form task-update-form hidden" th:id="'task-update-form-' + ${task.id}">
-                    <button id="close-update-class-form-btn" class="btn btn-outline-danger">
+                    <button th:id="'close-update-btn-' + ${task.id}" class="btn btn-outline-danger">
                         <i class="fas fa-xmark"></i>
                     </button>
                     <h2 class="text-center mb-4">Update task!</h2>
@@ -149,7 +149,7 @@
     })
 
     const $openUpdateTaskFormBtns = document.querySelectorAll('[id^="update-"]');
-    const $closeUpdateTaskFromBtn = document.getElementById('close-update-class-form-btn');
+    const $closeUpdateTaskFromBtns = document.querySelectorAll('[id^="close-update-btn-"]');
 
     $openUpdateTaskFormBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -166,9 +166,18 @@
         })
     })
 
-    $closeUpdateTaskFromBtn.addEventListener("click", () => {
-        $taskUpdateForm.classList.add('hidden');
-        $bgFilter.classList.add('hidden');
+    $closeUpdateTaskFromBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const id = btn.id.split("close-update-btn-")[1];
+            const form = document.getElementById(`task-update-form-${id}`);
+
+            if(form) {
+                form.classList.add('hidden');
+            }
+            if ($bgFilter) {
+                $bgFilter.classList.add('hidden');
+            }
+        })
     })
 </script>
 </body>

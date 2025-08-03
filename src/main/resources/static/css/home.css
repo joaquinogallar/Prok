@@ -129,9 +129,6 @@ body {
     justify-content: space-between;
     transition: transform 0.3s ease;
 }
-.list-group-item:hover {
-    transform: translateY(-3px);
-}
 .form-check-input {
     background-color: #333333;
     border: 1px solid #444444;
