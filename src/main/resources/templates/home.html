@@ -48,6 +48,7 @@
             </div>
         </form>
     </section>
+    <!--/*@thymesVar id="successMessage" type=""*/-->
     <div id="successMessage" th:if="${successMessage}" class="alert alert-success">
         <span th:text="${successMessage}"></span>
         <button onclick="closeMessage()" class="close-btn">&times;</button>
@@ -83,35 +84,35 @@
                     </form>
                     <button class="btn btn-outline-primary" th:id="${'update-' + task.id}">Update</button>
                 </div>
+                <div class="task-form task-update-form hidden" th:id="'task-update-form-' + ${task.id}">
+                    <button id="close-update-class-form-btn" class="btn btn-outline-danger">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                    <h2 class="text-center mb-4">Update task!</h2>
+                    <form th:action="@{/{userId}/tasks/{taskId}(userId=${userId}, taskI=${task.id})}" method="post">
+                        <input type="hidden" name="_method" value="put">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Id</label>
+                            <input class="form-control" name="id" th:value="${task.id}" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" name="description">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
             </li>
         </ul>
         <div class="alert alert-info text-center" role="alert" th:if="${numberOfTasks == 0}">
             No task pending.
         </div>
-    </section>
-    <section class="task-form task-update-form hidden">
-        <button id="close-update-class-form-btn" class="btn btn-outline-danger">
-            <i class="fas fa-xmark"></i>
-        </button>
-        <h2 class="text-center mb-4">Update task!</h2>
-        <form th:action="@{/{userId}/tasks(userId=${userId})}" method="post">
-            <input type="hidden" name="_method" value="update">
-            <div class="mb-3">
-                <label for="title" class="form-label">Id</label>
-                <input class="form-control" name="id" value="1" readonly />
-            </div>
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" name="description">
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-        </form>
     </section>
 </main>
 <footer class="text-center mt-4">
@@ -149,12 +150,19 @@
 
     const $openUpdateTaskFormBtns = document.querySelectorAll('[id^="update-"]');
     const $closeUpdateTaskFromBtn = document.getElementById('close-update-class-form-btn');
-    const $taskUpdateForm = document.querySelector(".task-update-form")
 
     $openUpdateTaskFormBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-            $taskUpdateForm.classList.remove('hidden');
-            $bgFilter.classList.remove('hidden');
+            const id = btn.id.split("update-")[1];
+            const form = document.getElementById(`task-update-form-${id}`);
+
+            if(form) {
+                form.classList.remove('hidden');
+            }
+
+            if ($bgFilter) {
+                $bgFilter.classList.remove('hidden');
+            }
         })
     })
 

@@ -1,5 +1,6 @@
 package com.joaquinogallar.prok.service;
 
+import com.joaquinogallar.prok.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
@@ -80,6 +81,13 @@ public class UserEntityService {
         }
         userEntityRepository.delete(userEntity);
         return "User deleted";
+    }
+
+    public String updateTask(UUID userId, Long taskId, TaskUpdateDto dataTask) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task not found"));
+        task.setTitle(dataTask.title());
+        task.setDescription(dataTask.description());
+        return "Task updated";
     }
 
 }

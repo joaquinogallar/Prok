@@ -1,8 +1,10 @@
 package com.joaquinogallar.prok.controller;
 
+import com.joaquinogallar.prok.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.dto.UserEntityResponseDto;
 import com.joaquinogallar.prok.entity.Task;
+import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,6 +72,12 @@ public class UserEntityController {
     ) {
         userEntityService.deleteTask(userId, taskId);
         redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully");
+        return "redirect:/home";
+    }
+
+    @PutMapping("/{userId}/tasks/{taskId}")
+    public String updateTask(@PathVariable UUID userId, @PathVariable Long taskId, @ModelAttribute TaskUpdateDto task) {
+        userEntityService.updateTask(userId, taskId, task);
         return "redirect:/home";
     }
 }
