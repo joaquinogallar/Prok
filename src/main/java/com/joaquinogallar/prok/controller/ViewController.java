@@ -5,6 +5,7 @@ import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.JwtService;
 import com.joaquinogallar.prok.service.TaskService;
+import com.joaquinogallar.prok.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,13 +23,13 @@ import java.util.stream.Collectors;
 @Controller
 public class ViewController {
 
-    private final JwtService jwtService;
     private final TaskService taskService;
+    private final UserEntityService userEntityService;
 
     @Autowired
-    public ViewController(JwtService jwtService, TaskService taskService) {
-        this.jwtService = jwtService;
+    public ViewController(TaskService taskService, UserEntityService userEntityService) {
         this.taskService = taskService;
+        this.userEntityService = userEntityService;
     }
 
     @GetMapping({"/", "/home"})
@@ -36,7 +37,7 @@ public class ViewController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity user = (UserEntity) authentication.getPrincipal();
 
-        List<Task> userTasks = taskService.getTasksByUser(user.getId());
+        List<Task> userTasks = userEntityService.findTasksByUserId(user.getId());
 
         if (authentication.isAuthenticated()) {
             String username = authentication.getName();
@@ -47,27 +48,6 @@ public class ViewController {
         }
 
         return "home";
-    }
-
-    @GetMapping("/user")
-    public String user(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = (UserEntity) authentication.getPrincipal();
-
-        if (authentication.isAuthenticated()) {
-            List<Task> userTasks = taskService.getTasksByUser(user.getId());
-            List<Task> userFinishedTasks = taskService.getFinishedTasksByUser(user.getId());
-
-
-            String username = authentication.getName();
-
-            model.addAttribute("numberOfTasks", taskService.getTasksByUser(user.getId()).size());
-            model.addAttribute("user", user);
-            model.addAttribute("tasks", userTasks);
-            model.addAttribute("tasksFinished", userFinishedTasks);
-        }
-
-        return "userProfile";
     }
 
     @PutMapping("/{taskId}/completed")

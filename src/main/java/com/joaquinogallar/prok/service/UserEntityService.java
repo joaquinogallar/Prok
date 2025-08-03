@@ -49,6 +49,7 @@ public class UserEntityService {
         return new UserEntityDto(user);
     }
 
+    // ------------------------------------------------------------------------------------------
     @Transactional
     public void createTask(UUID userId, Task task) {
         if(task.getTitle() == null || task.getTitle().isEmpty()) {
@@ -91,4 +92,15 @@ public class UserEntityService {
         return "Task updated";
     }
 
+    public List<Task> findTasksByUserId(UUID id) {
+        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return user.getTasks();
+    }
+
+    public List<Task> findFinishedTasksByUserId(UUID id) {
+        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return user.getTasks().stream()
+                .filter(t -> t.getFinishedAt() != null)
+                .toList();
+    }
 }

@@ -56,7 +56,7 @@ public class UserEntityController {
             RedirectAttributes redirectAttributes
     ) {
         userEntityService.createTask(userId, task);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Task created");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{userId}/tasks/{taskId}")
