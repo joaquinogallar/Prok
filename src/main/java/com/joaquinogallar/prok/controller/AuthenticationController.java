@@ -1,14 +1,13 @@
 package com.joaquinogallar.prok.controller;
 
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
-import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.dto.UserEntityDto;
 import com.joaquinogallar.prok.dto.UserLoginDto;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.AuthenticationService;
 import com.joaquinogallar.prok.service.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +43,7 @@ public class AuthenticationController {
         }
 
         try {
-            UserEntityResponseDto user = authenticationService.signUp(userEntityRequestDto);
+            UserEntityDto user = authenticationService.signUp(userEntityRequestDto);
             return "redirect:/auth/login";
         } catch (Exception e) {
             model.addAttribute("error", "Error during registration");

@@ -1,7 +1,7 @@
 package com.joaquinogallar.prok.service;
 
 import com.joaquinogallar.prok.dto.TaskUpdateDto;
-import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.dto.UserEntityDto;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.repository.TaskRepository;
@@ -32,21 +32,21 @@ public class UserEntityService {
         this.taskRepository = taskRepository;
     }
 
-    public List<UserEntityResponseDto> getAllUsers() {
+    public List<UserEntityDto> getAllUsers() {
         List<UserEntity> users = userEntityRepository.findAll();
-        List<UserEntityResponseDto> userEntityResponseDtos = new ArrayList<>();
+        List<UserEntityDto> userEntityDtos = new ArrayList<>();
         users.forEach(userEntity -> {
-            UserEntityResponseDto userEntityResponseDto = new UserEntityResponseDto(userEntity);
-            userEntityResponseDtos.add(userEntityResponseDto);
+            UserEntityDto userEntityDto = new UserEntityDto(userEntity);
+            userEntityDtos.add(userEntityDto);
         });
-        return userEntityResponseDtos;
+        return userEntityDtos;
     }
 
-    public UserEntityResponseDto getUserById(UUID id) {
+    public UserEntityDto getUserById(UUID id) {
         UserEntity user = userEntityRepository.findById(id).orElse(null);
         if (user == null) throw new EntityNotFoundException("User not found");
 
-        return new UserEntityResponseDto(user);
+        return new UserEntityDto(user);
     }
 
     @Transactional

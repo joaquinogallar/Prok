@@ -1,8 +1,7 @@
 package com.joaquinogallar.prok.service;
 
-import com.joaquinogallar.prok.dto.LoginDto;
 import com.joaquinogallar.prok.dto.UserEntityRequestDto;
-import com.joaquinogallar.prok.dto.UserEntityResponseDto;
+import com.joaquinogallar.prok.dto.UserEntityDto;
 import com.joaquinogallar.prok.dto.UserLoginDto;
 import com.joaquinogallar.prok.entity.Role;
 import com.joaquinogallar.prok.entity.UserEntity;
@@ -37,7 +36,7 @@ public class AuthenticationService {
         return trimmedNames;
     }
 
-    public UserEntityResponseDto signUp(UserEntityRequestDto user) {
+    public UserEntityDto signUp(UserEntityRequestDto user) {
         String[] trimmedNames = trimName(user.getFullName());
         UserEntity userEntity = UserEntity
                 .builder()
@@ -50,7 +49,7 @@ public class AuthenticationService {
 
         userEntityRepository.save(userEntity);
 
-        return new UserEntityResponseDto(userEntity);
+        return new UserEntityDto(userEntity);
     }
 
     public UserEntity authenticate(UserLoginDto userData) {

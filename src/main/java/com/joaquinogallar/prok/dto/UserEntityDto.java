@@ -1,6 +1,5 @@
 package com.joaquinogallar.prok.dto;
 
-import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import lombok.Data;
 
@@ -8,7 +7,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-public class UserEntityResponseDto {
+public class UserEntityDto {
 
     private UUID id;
 
@@ -18,7 +17,7 @@ public class UserEntityResponseDto {
 
     private LocalDate createdAt;
 
-    public UserEntityResponseDto(UserEntity userEntity) {
+    public UserEntityDto(UserEntity userEntity) {
         this.id = userEntity.getId();
         this.firstName = userEntity.getFirstName();
         this.lastName = userEntity.getLastName();
