@@ -58,6 +58,7 @@
         <p class="text-center" th:text="'Number of tasks: ' + ${numberOfTasks}"></p>
         <ul class="list-group" th:each="task: ${tasks}">
             <li class="list-group-item task-item">
+                <!-- START COMPLETED -->
                 <form class="form-check" th:action="@{/{taskId}/completed(taskId=${task.id})}" th:method="post">
                     <input type="hidden" name="_method" value="put">
                     <input th:if="${(task.getFinishedAt() == null)}"
@@ -77,6 +78,9 @@
                            onchange="this.form.submit()">
                     <label class="form-check-label" th:for="${'checkbox_' + task.id}" th:text="${task.title}"></label>
                 </form>
+                <!-- END COMPLETED -->
+
+                <!-- START DELETE -->
                 <div class="btn-group">
                     <form th:action="@{/api/v1/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
                         <input type="hidden" name="_method" value="delete">
@@ -84,12 +88,15 @@
                     </form>
                     <button class="btn btn-outline-primary" th:id="${'update-' + task.id}">Update</button>
                 </div>
+                <!-- END DELETE -->
+
+                <!-- START UPDATE -->
                 <div class="task-form task-update-form hidden" th:id="'task-update-form-' + ${task.id}">
                     <button th:id="'close-update-btn-' + ${task.id}" class="btn btn-outline-danger">
                         <i class="fas fa-xmark"></i>
                     </button>
                     <h2 class="text-center mb-4">Update task!</h2>
-                    <form th:action="@{/{userId}/tasks/{taskId}(userId=${userId}, taskI=${task.id})}" method="post">
+                    <form th:action="@{/api/v1/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
                         <input type="hidden" name="_method" value="put">
                         <div class="mb-3">
                             <label for="title" class="form-label">Id</label>
@@ -108,6 +115,7 @@
                         </div>
                     </form>
                 </div>
+                <!-- END UPDATE -->
             </li>
         </ul>
         <div class="alert alert-info text-center" role="alert" th:if="${numberOfTasks == 0}">
