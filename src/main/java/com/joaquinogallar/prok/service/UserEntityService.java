@@ -87,6 +87,7 @@ public class UserEntityService {
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task not found"));
         task.setTitle(dataTask.title());
         task.setDescription(dataTask.description());
+        taskRepository.save(task);
         return "Task updated";
     }
 

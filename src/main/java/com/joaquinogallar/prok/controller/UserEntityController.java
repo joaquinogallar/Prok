@@ -54,30 +54,31 @@ public class UserEntityController {
 
     // tasks
     @PostMapping("/{userId}/tasks")
+    @ResponseBody
     public String addTask(
             @PathVariable UUID userId,
             @ModelAttribute Task task,
             RedirectAttributes redirectAttributes
     ) {
         userEntityService.createTask(userId, task);
-        redirectAttributes.addFlashAttribute("successMessage", "Task created successfully");
-        return "redirect:/home";
+        return "Task added successfully";
     }
 
     @DeleteMapping("/{userId}/tasks/{taskId}")
+    @ResponseBody
     public String deleteTask(
             @PathVariable UUID userId,
             @PathVariable Long taskId,
             RedirectAttributes redirectAttributes
     ) {
         userEntityService.deleteTask(userId, taskId);
-        redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully");
-        return "redirect:/home";
+        return "Task deleted successfully";
     }
 
     @PutMapping("/{userId}/tasks/{taskId}")
+    @ResponseBody
     public String updateTask(@PathVariable UUID userId, @PathVariable Long taskId, @ModelAttribute TaskUpdateDto task) {
         userEntityService.updateTask(userId, taskId, task);
-        return "redirect:/home";
+        return "Task updated successfully";
     }
 }
