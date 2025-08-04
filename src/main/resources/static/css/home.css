@@ -3,28 +3,6 @@ body {
     color: #d0d0d0;
     font-family: 'Inter', sans-serif;
 }
-.navbar-custom {
-    background-color: #2a2a2a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    padding: 1rem 2rem;
-}
-.navbar-brand {
-    color: #d0d0d0 !important;
-    font-size: 2rem;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(208, 208, 208, 0.3);
-}
-.icon-link {
-    color: #aaaaaa;
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-.icon-link:hover {
-    color: #cccccc;
-    text-decoration: underline;
-}
 .main-container {
     padding: 2rem;
     max-width: 1200px;
@@ -189,12 +167,6 @@ h2 {
 @media (max-width: 576px) {
     .main-container {
         padding: 1rem;
-    }
-    .navbar-custom {
-        padding: 0.75rem 1rem;
-    }
-    .navbar-brand {
-        font-size: 1.5rem;
     }
     .task-form {
         padding: 1.5rem;

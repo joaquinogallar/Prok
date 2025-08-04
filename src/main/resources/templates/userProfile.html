@@ -9,8 +9,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- CSS -->
   <link rel="stylesheet" th:href="@{/css/userProfile.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+
 </head>
 <body>
+<header>
+  <nav class="navbar navbar-custom">
+    <div class="container-fluid">
+      <a th:href="@{/}" class="navbar-brand">Prok</a>
+      <div>
+        <a class="icon-link" th:href="@{/logout}">
+          Logout
+        </a>
+        <a class="icon-link" th:href="@{/my-account}">
+          My Account
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
 <div class="container py-5">
   <div class="profile-header">
     <div class="row align-items-center">
