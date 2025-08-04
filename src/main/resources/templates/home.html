@@ -84,7 +84,7 @@
 
                 <!-- START DELETE -->
                 <div class="btn-group">
-                    <form th:action="@{/api/v1/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
+                    <form th:action="@{/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
                         <input type="hidden" name="_method" value="delete">
                         <button class="btn btn-danger" th:id="${'delete-' + task.id}">Delete</button>
                     </form>
@@ -98,7 +98,7 @@
                         <i class="fas fa-xmark"></i>
                     </button>
                     <h2 class="text-center mb-4">Update task!</h2>
-                    <form th:action="@{/api/v1/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
+                    <form th:action="@{/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
                         <input type="hidden" name="_method" value="put">
                         <div class="mb-3">
                             <label for="title" class="form-label">Id</label>

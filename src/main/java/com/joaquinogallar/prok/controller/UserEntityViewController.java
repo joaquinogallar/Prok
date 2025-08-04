@@ -1,5 +1,6 @@
 package com.joaquinogallar.prok.controller;
 
+import com.joaquinogallar.prok.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.entity.Task;
 import com.joaquinogallar.prok.entity.UserEntity;
 import com.joaquinogallar.prok.service.UserEntityService;
@@ -46,4 +47,15 @@ public class UserEntityViewController {
         return "redirect:/home";
     }
 
+    @DeleteMapping("/users/{userId}/tasks/{taskId}")
+    public String deleteTask(@PathVariable UUID userId, @PathVariable Long taskId) {
+        userEntityService.deleteTask(userId, taskId);
+        return "redirect:/home";
+    }
+
+    @PutMapping("/users/{userId}/tasks/{taskId}")
+    public String updateTask(@PathVariable UUID userId, @PathVariable Long taskId, @ModelAttribute TaskUpdateDto task) {
+        userEntityService.updateTask(userId, taskId, task);
+        return "redirect:/home";
+    }
 }
