@@ -1,11 +1,11 @@
-package com.joaquinogallar.prok.service;
+package com.joaquinogallar.prok.task.service;
 
-import com.joaquinogallar.prok.dto.TaskUpdateDto;
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.entity.UserEntity;
-import com.joaquinogallar.prok.repository.TaskRepository;
-import com.joaquinogallar.prok.repository.UserEntityRepository;
-import com.joaquinogallar.prok.utils.Status;
+import com.joaquinogallar.prok.task.dto.TaskUpdateDto;
+import com.joaquinogallar.prok.task.entity.Task;
+import com.joaquinogallar.prok.user.entity.UserEntity;
+import com.joaquinogallar.prok.task.repository.TaskRepository;
+import com.joaquinogallar.prok.user.repository.UserEntityRepository;
+import com.joaquinogallar.prok.task.utils.Status;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.joaquinogallar.prok.dto;
+package com.joaquinogallar.prok.user.dto;
 
-import com.joaquinogallar.prok.entity.UserEntity;
+import com.joaquinogallar.prok.user.entity.UserEntity;
 import lombok.Data;
 
 import java.time.LocalDate;

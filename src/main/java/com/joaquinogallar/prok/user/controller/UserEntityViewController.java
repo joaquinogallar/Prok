@@ -1,9 +1,9 @@
-package com.joaquinogallar.prok.controller;
+package com.joaquinogallar.prok.user.controller;
 
-import com.joaquinogallar.prok.dto.TaskUpdateDto;
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.entity.UserEntity;
-import com.joaquinogallar.prok.service.UserEntityService;
+import com.joaquinogallar.prok.task.dto.TaskUpdateDto;
+import com.joaquinogallar.prok.task.entity.Task;
+import com.joaquinogallar.prok.user.entity.UserEntity;
+import com.joaquinogallar.prok.user.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

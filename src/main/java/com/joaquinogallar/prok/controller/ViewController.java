@@ -1,24 +1,18 @@
 package com.joaquinogallar.prok.controller;
 
 
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.entity.UserEntity;
-import com.joaquinogallar.prok.service.JwtService;
-import com.joaquinogallar.prok.service.TaskService;
-import com.joaquinogallar.prok.service.UserEntityService;
+import com.joaquinogallar.prok.task.entity.Task;
+import com.joaquinogallar.prok.user.entity.UserEntity;
+import com.joaquinogallar.prok.task.service.TaskService;
+import com.joaquinogallar.prok.user.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class ViewController {

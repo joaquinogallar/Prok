@@ -1,3 +1,3 @@
-package com.joaquinogallar.prok.dto;
+package com.joaquinogallar.prok.task.dto;
 
 public record TaskUpdateDto(String title, String description) {}

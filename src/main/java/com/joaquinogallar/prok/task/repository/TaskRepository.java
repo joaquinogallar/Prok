@@ -1,7 +1,7 @@
-package com.joaquinogallar.prok.repository;
+package com.joaquinogallar.prok.task.repository;
 
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.entity.UserEntity;
+import com.joaquinogallar.prok.task.entity.Task;
+import com.joaquinogallar.prok.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.joaquinogallar.prok.config;
 
-import com.joaquinogallar.prok.repository.UserEntityRepository;
+import com.joaquinogallar.prok.user.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
-package com.joaquinogallar.prok.repository;
+package com.joaquinogallar.prok.user.repository;
 
-import com.joaquinogallar.prok.entity.UserEntity;
+import com.joaquinogallar.prok.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

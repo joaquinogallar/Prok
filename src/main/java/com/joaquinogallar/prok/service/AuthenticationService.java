@@ -1,11 +1,11 @@
 package com.joaquinogallar.prok.service;
 
-import com.joaquinogallar.prok.dto.UserEntityRequestDto;
-import com.joaquinogallar.prok.dto.UserEntityDto;
-import com.joaquinogallar.prok.dto.UserLoginDto;
-import com.joaquinogallar.prok.entity.Role;
-import com.joaquinogallar.prok.entity.UserEntity;
-import com.joaquinogallar.prok.repository.UserEntityRepository;
+import com.joaquinogallar.prok.user.dto.UserEntityRequestDto;
+import com.joaquinogallar.prok.user.dto.UserEntityDto;
+import com.joaquinogallar.prok.user.dto.UserLoginDto;
+import com.joaquinogallar.prok.user.entity.Role;
+import com.joaquinogallar.prok.user.entity.UserEntity;
+import com.joaquinogallar.prok.user.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

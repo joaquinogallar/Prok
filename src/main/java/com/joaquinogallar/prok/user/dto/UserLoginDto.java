@@ -1,8 +1,6 @@
-package com.joaquinogallar.prok.dto;
+package com.joaquinogallar.prok.user.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

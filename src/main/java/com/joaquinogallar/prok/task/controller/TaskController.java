@@ -1,8 +1,8 @@
-package com.joaquinogallar.prok.controller;
+package com.joaquinogallar.prok.task.controller;
 
-import com.joaquinogallar.prok.dto.TaskUpdateDto;
-import com.joaquinogallar.prok.entity.Task;
-import com.joaquinogallar.prok.service.TaskService;
+import com.joaquinogallar.prok.task.dto.TaskUpdateDto;
+import com.joaquinogallar.prok.task.entity.Task;
+import com.joaquinogallar.prok.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

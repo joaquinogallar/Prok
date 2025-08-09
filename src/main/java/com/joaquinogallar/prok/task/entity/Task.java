@@ -1,6 +1,7 @@
-package com.joaquinogallar.prok.entity;
+package com.joaquinogallar.prok.task.entity;
 
-import com.joaquinogallar.prok.utils.Status;
+import com.joaquinogallar.prok.user.entity.UserEntity;
+import com.joaquinogallar.prok.task.utils.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
