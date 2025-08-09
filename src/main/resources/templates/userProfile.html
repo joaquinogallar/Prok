@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/css/generalStyles.css}">
   <link rel="stylesheet" th:href="@{/css/userProfile.css}">
   <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
@@ -23,6 +24,7 @@
         <a class="icon-link" th:href="@{/my-account}">
           My Account
         </a>
+        <button id="toggle-theme" class="btn btn-outline-light ms-2">Light Mode</button>
       </div>
     </div>
   </nav>
@@ -56,7 +58,7 @@
   </div>
 
   <div class="row mb-4">
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-3">
       <div class="card stats-card bg-primary text-white">
         <div class="card-body">
           <h5 class="card-title">Total Tasks</h5>
@@ -65,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-3">
       <div class="card stats-card bg-success text-white">
         <div class="card-body">
           <h5 class="card-title">Completed</h5>
@@ -74,16 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="card stats-card bg-warning text-dark">
-        <div class="card-body">
-          <h5 class="card-title">In progress</h5>
-          <h2 class="card-text" id="inProgressTasks">0</h2>
-          <p class="card-text"><small th:text="'% in progress'"></small></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-3">
       <div class="card stats-card bg-danger text-white">
         <div class="card-body">
           <h5 class="card-title">Pending</h5>
@@ -154,12 +147,11 @@
                   <h6 class="mb-1" th:text="${task.getTitle()}"></h6>
                   <small class="text-muted" th:text="${task.getCreatedAt()}"></small>
                 </div>
-                <span th:if="${task.getFinishedAt()} == null" class="badge bg-warning text-dark">In Progress</span>
                 <span class="badge bg-success" th:if="${task.getFinishedAt() != null}">Completed</span>
-              </div>
-            </li>
-          </ul>
-        </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         <div class="card-footer text-end">
           <a href="/home" class="btn btn-sm btn-outline-primary">View all tasks</a>
         </div>
@@ -167,26 +159,6 @@
     </div>
   </div>
 </div>
-<script>
-  let $editUserInfoBtn = document.getElementById('edit-user-info-btn');
-  let $configUserBtn = document.getElementById('config-user-btn');
-  let $formEditUserInfo = document.getElementById('form-edit-user-info');
-  let $userInfo = document.getElementById('userFullName');
-  let $closeCreateClassFormBtn = document.getElementById('close-create-class-form-btn');
-
-  $editUserInfoBtn.addEventListener("click", () => {
-    $userInfo.classList.add('hidden');
-    $formEditUserInfo.classList.remove('hidden');
-    $editUserInfoBtn.classList.add('hidden');
-    $configUserBtn.classList.add('hidden');
-  });
-
-  $closeCreateClassFormBtn.addEventListener("click", () => {
-    $userInfo.classList.remove('hidden');
-    $formEditUserInfo.classList.add('hidden');
-    $editUserInfoBtn.classList.remove('hidden');
-    $configUserBtn.classList.remove('hidden');
-  });
-</script>
+<script th:src="@{/js/userProfile.js}"></script>
 </body>
 </html>

@@ -1,3 +1,60 @@
 .goto-login, .goto-register, .goto-login a, .goto-register a {
     color: #f0d0d0 !important;
 }
+
+/* Light mode overrides */
+body.light-mode {
+    background: linear-gradient(135deg, #ffffff 0%, #eaeaea 100%);
+    color: #000000;
+}
+
+body.light-mode .navbar-custom,
+body.light-mode .card,
+body.light-mode .card-header,
+body.light-mode .card-footer,
+body.light-mode .list-group-item {
+    background-color: #ffffff;
+    border-color: #dddddd;
+    color: #000000;
+}
+
+body.light-mode .navbar-brand,
+body.light-mode .icon-link,
+body.light-mode .card-title,
+body.light-mode .card-text,
+body.light-mode .table th,
+body.light-mode .table td {
+    color: #000000 !important;
+}
+
+body.light-mode .text-muted {
+    color: #6c757d !important;
+}
+
+body.light-mode .btn-outline-primary,
+body.light-mode .btn-outline-secondary,
+body.light-mode .btn-outline-success,
+body.light-mode .btn-outline-danger,
+body.light-mode .btn-outline-light {
+    border-color: #000000;
+    color: #000000;
+}
+
+body.light-mode .btn-outline-primary:hover,
+body.light-mode .btn-outline-secondary:hover,
+body.light-mode .btn-outline-success:hover,
+body.light-mode .btn-outline-danger:hover,
+body.light-mode .btn-outline-light:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.btn-outline-light {
+    border-color: #d0d0d0;
+    color: #d0d0d0;
+}
+
+.btn-outline-light:hover {
+    background-color: #d0d0d0;
+    color: #000000;
+}
