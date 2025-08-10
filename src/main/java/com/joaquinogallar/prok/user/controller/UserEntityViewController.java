@@ -31,11 +31,12 @@ public class UserEntityViewController {
         if (authentication.isAuthenticated()) {
             List<Task> userTasks = userEntityService.findTasksByUserId(user.getId());
             List<Task> userFinishedTasks = userEntityService.findFinishedTasksByUserId(user.getId());
-
+            List<Task> userNotFinishedTasks = userEntityService.findNotFinishedTasksByUserId(user.getId());
             model.addAttribute("numberOfTasks", userTasks.size());
             model.addAttribute("user", user);
             model.addAttribute("tasks", userTasks);
             model.addAttribute("tasksFinished", userFinishedTasks);
+            model.addAttribute("tasksNotFinished", userNotFinishedTasks);
         }
 
         return "userProfile";

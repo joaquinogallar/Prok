@@ -72,7 +72,7 @@
         <div class="card-body">
           <h5 class="card-title">Completed</h5>
           <h2 class="card-text" id="completedTasks" th:text="${tasksFinished.size()}"></h2>
-          <p class="card-text"><small th:text="'% completed'"></small></p>
+          <p class="card-text"><small th:text="${tasksFinished.size() * 100 / numberOfTasks} + '% completed'"></small></p>
         </div>
       </div>
     </div>
@@ -80,8 +80,8 @@
       <div class="card stats-card bg-danger text-white">
         <div class="card-body">
           <h5 class="card-title">Pending</h5>
-          <h2 class="card-text" id="pendingTasks">0</h2>
-          <p class="card-text"><small th:text="'% pending'"></small></p>
+          <h2 class="card-text" id="pendingTasks" th:text="${tasksNotFinished.size()}"></h2>
+          <small th:text="${(tasksNotFinished.size() * 100.0 / numberOfTasks) + '% pending'}"></small>
         </div>
       </div>
     </div>

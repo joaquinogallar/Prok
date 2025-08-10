@@ -103,4 +103,11 @@ public class UserEntityService {
                 .filter(t -> t.getFinishedAt() != null)
                 .toList();
     }
+
+    public List<Task> findNotFinishedTasksByUserId(UUID id) {
+        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return user.getTasks().stream()
+                .filter(t -> t.getFinishedAt() == null)
+                .toList();
+    }
 }
