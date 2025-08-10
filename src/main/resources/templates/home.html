@@ -87,12 +87,17 @@
                 <!-- END COMPLETED -->
 
                 <!-- START DELETE -->
-                <div class="btn-group">
-                    <form th:action="@{/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post">
+                <div class="d-flex gap-2">
+                    <form th:action="@{/users/{userId}/tasks/{taskId}(userId=${userId}, taskId=${task.id})}" method="post" class="m-0">
                         <input type="hidden" name="_method" value="delete">
-                        <button class="btn btn-danger" th:id="${'delete-' + task.id}">Delete</button>
+                        <button type="submit" class="btn btn-danger px-3 py-1" th:id="${'delete-' + task.id}">
+                            <i class="bi bi-trash fs-6"></i> Delete
+                        </button>
                     </form>
-                    <button class="btn btn-outline-primary" th:id="${'update-' + task.id}">Update</button>
+
+                    <button class="btn btn-outline-primary px-3 py-1" th:id="${'update-' + task.id}">
+                        <i class="bi bi-pencil fs-6"></i> Update
+                    </button>
                 </div>
                 <!-- END DELETE -->
 
