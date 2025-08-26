@@ -60,6 +60,7 @@
         <button onclick="closeMessage()" class="close-btn">&times;</button>
     </div>
     <section class="task-list">
+        <!-- START REED -->
         <h2 class="text-center mb-4">Your Tasks</h2>
         <p class="text-center" th:text="'Number of tasks: ' + ${numberOfTasks}"></p>
         <ul class="list-group" th:each="task: ${tasks}">
@@ -82,7 +83,12 @@
                            th:id="${'checkbox_' + task.id}"
                            checked
                            onchange="this.form.submit()">
-                    <label class="form-check-label" th:for="${'checkbox_' + task.id}" th:text="${task.title}"></label>
+                    <label
+                            class="form-check-label"
+                            th:for="${'checkbox_' + task.id}"
+                            th:text="${task.title}"
+                            th:classappend="${task.getFinishedAt() != null} ? 'text-decoration-line-through' : ''"
+                    ></label>
                 </form>
                 <!-- END COMPLETED -->
 
@@ -128,6 +134,7 @@
                 </div>
                 <!-- END UPDATE -->
             </li>
+            <!-- END REED -->
         </ul>
         <div class="alert alert-info text-center" role="alert" th:if="${numberOfTasks == 0}">
             No task pending.
