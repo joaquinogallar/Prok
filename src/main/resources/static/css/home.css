@@ -2,6 +2,7 @@ body {
     background: linear-gradient(135deg, #1c1c1c 0%, #2c2c2c 100%);
     color: #d0d0d0;
     font-family: 'Inter', sans-serif;
+    min-height: 100vh;
 }
 .main-container {
     padding: 2rem;
