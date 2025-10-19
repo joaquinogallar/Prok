@@ -49,6 +49,15 @@ public class UserEntityService {
         return new UserEntityDto(user);
     }
 
+    public void updateUserFullName(UUID userId, String firstName, String lastName) {
+        UserEntity newUser = userEntityRepository.findById(userId).orElse(null);
+        if (newUser == null) throw new EntityNotFoundException("User not found");
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+
+        userEntityRepository.save(newUser);
+    }
+
     // ------------------------------------------------------------------------------------------
     @Transactional
     public void createTask(UUID userId, Task task) {

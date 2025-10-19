@@ -4,6 +4,7 @@ import com.joaquinogallar.prok.task.dto.TaskUpdateDto;
 import com.joaquinogallar.prok.user.dto.UserEntityDto;
 import com.joaquinogallar.prok.task.entity.Task;
 import com.joaquinogallar.prok.user.service.UserEntityService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,12 @@ public class UserEntityController {
         String message = userEntityService.deleteUser(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(message);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updateUserFullName(@PathVariable UUID userId, @RequestBody String FirstName, @RequestBody String LastName) {
+        userEntityService.updateUserFullName(userId, FirstName, LastName);
+        return ResponseEntity.ok("User information updated");
     }
 
     // tasks
