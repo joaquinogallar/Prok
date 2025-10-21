@@ -36,7 +36,7 @@ public class UserEntityService {
         List<UserEntity> users = userEntityRepository.findAll();
         List<UserEntityDto> userEntityDtos = new ArrayList<>();
         users.forEach(userEntity -> {
-            UserEntityDto userEntityDto = new UserEntityDto(userEntity);
+            UserEntityDto userEntityDto = new UserEntityDto(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(), userEntity.getCreatedAt());
             userEntityDtos.add(userEntityDto);
         });
         return userEntityDtos;
@@ -46,7 +46,7 @@ public class UserEntityService {
         UserEntity user = userEntityRepository.findById(id).orElse(null);
         if (user == null) throw new EntityNotFoundException("User not found");
 
-        return new UserEntityDto(user);
+        return new UserEntityDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCreatedAt());
     }
 
     public void updateUserFullName(UUID userId, String firstName, String lastName) {

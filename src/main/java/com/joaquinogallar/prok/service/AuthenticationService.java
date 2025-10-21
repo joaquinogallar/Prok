@@ -49,7 +49,7 @@ public class AuthenticationService {
 
         userEntityRepository.save(userEntity);
 
-        return new UserEntityDto(userEntity);
+        return new UserEntityDto(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail() ,userEntity.getCreatedAt());
     }
 
     public UserEntity authenticate(UserLoginDto userData) {
