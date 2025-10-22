@@ -1,4 +1,4 @@
-package com.joaquinogallar.prok.controller;
+package com.joaquinogallar.prok.web.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;

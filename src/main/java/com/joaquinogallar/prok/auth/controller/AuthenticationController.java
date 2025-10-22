@@ -1,11 +1,11 @@
-package com.joaquinogallar.prok.controller;
+package com.joaquinogallar.prok.auth.controller;
 
 import com.joaquinogallar.prok.user.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.user.dto.UserEntityDto;
 import com.joaquinogallar.prok.user.dto.UserLoginDto;
 import com.joaquinogallar.prok.user.entity.UserEntity;
-import com.joaquinogallar.prok.service.AuthenticationService;
-import com.joaquinogallar.prok.service.JwtService;
+import com.joaquinogallar.prok.auth.service.AuthenticationService;
+import com.joaquinogallar.prok.auth.service.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

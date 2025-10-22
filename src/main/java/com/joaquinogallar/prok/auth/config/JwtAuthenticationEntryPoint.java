@@ -1,4 +1,4 @@
-package com.joaquinogallar.prok.config;
+package com.joaquinogallar.prok.auth.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

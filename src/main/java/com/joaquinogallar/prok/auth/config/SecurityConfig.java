@@ -1,4 +1,4 @@
-package com.joaquinogallar.prok.config;
+package com.joaquinogallar.prok.auth.config;
 
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;

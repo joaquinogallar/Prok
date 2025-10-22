@@ -1,6 +1,6 @@
-package com.joaquinogallar.prok.config;
+package com.joaquinogallar.prok.auth.config;
 
-import com.joaquinogallar.prok.service.JwtService;
+import com.joaquinogallar.prok.auth.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

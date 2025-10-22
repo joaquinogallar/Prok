@@ -1,4 +1,4 @@
-package com.joaquinogallar.prok.service;
+package com.joaquinogallar.prok.auth.service;
 
 import com.joaquinogallar.prok.user.dto.UserEntityRequestDto;
 import com.joaquinogallar.prok.user.dto.UserEntityDto;
