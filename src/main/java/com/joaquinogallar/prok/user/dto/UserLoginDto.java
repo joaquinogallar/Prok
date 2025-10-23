@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserLoginDto {
+public record UserLoginDto(
+        @NotBlank(message = "Email cannot be empty.")
+        String email,
 
-    @NotBlank(message = "Email cannot be empty.")
-    private String email;
-
-    @NotBlank(message = "Password cannot be empty.")
-    private String password;
+        @NotBlank(message = "Password cannot be empty.")
+        String password
+) {
 }

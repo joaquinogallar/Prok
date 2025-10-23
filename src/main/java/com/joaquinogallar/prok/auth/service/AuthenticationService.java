@@ -55,12 +55,12 @@ public class AuthenticationService {
     public UserEntity authenticate(UserLoginDto userData) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userData.getEmail(),
-                        userData.getPassword()
+                        userData.email(),
+                        userData.password()
                 )
         );
 
-        return userEntityRepository.findByEmail(userData.getEmail()).orElseThrow();
+        return userEntityRepository.findByEmail(userData.email()).orElseThrow();
     }
 
 

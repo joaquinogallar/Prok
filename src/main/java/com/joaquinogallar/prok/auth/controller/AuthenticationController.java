@@ -53,7 +53,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String showSignInForm(Model model) {
-        model.addAttribute("userLoginDto", new UserLoginDto());
+        model.addAttribute("userLoginDto", new UserLoginDto(null, null));
         return "login";
     }
 
