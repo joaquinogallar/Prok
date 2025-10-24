@@ -29,7 +29,7 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public String showSignUpForm(Model model) {
-        model.addAttribute("userEntityRequestDto", new UserEntityRequestDto());
+        model.addAttribute("userEntityRequestDto", new UserEntityRequestDto("", "", ""));
         return "register";
     }
 
