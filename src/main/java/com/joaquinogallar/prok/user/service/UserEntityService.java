@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserEntityService {
@@ -33,25 +34,20 @@ public class UserEntityService {
     }
 
     public List<UserEntityDto> getAllUsers() {
-        List<UserEntity> users = userEntityRepository.findAll();
-        List<UserEntityDto> userEntityDtos = new ArrayList<>();
-        users.forEach(userEntity -> {
-            UserEntityDto userEntityDto = new UserEntityDto(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(), userEntity.getCreatedAt());
-            userEntityDtos.add(userEntityDto);
-        });
-        return userEntityDtos;
+        return userEntityRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public UserEntityDto getUserById(UUID id) {
-        UserEntity user = userEntityRepository.findById(id).orElse(null);
-        if (user == null) throw new EntityNotFoundException("User not found");
-
-        return new UserEntityDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCreatedAt());
+        UserEntity user = userEntityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return convertToDto(user);
     }
 
     public void updateUserFullName(UUID userId, String firstName, String lastName) {
-        UserEntity newUser = userEntityRepository.findById(userId).orElse(null);
-        if (newUser == null) throw new EntityNotFoundException("User not found");
+        UserEntity newUser = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
 
@@ -94,7 +90,8 @@ public class UserEntityService {
     }
 
     public String updateTask(UUID userId, Long taskId, TaskUpdateDto dataTask) {
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task not found"));
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found"));
         task.setTitle(dataTask.title());
         task.setDescription(dataTask.description());
         taskRepository.save(task);
@@ -102,21 +99,34 @@ public class UserEntityService {
     }
 
     public List<Task> findTasksByUserId(UUID id) {
-        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        UserEntity user = userEntityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         return user.getTasks();
     }
 
     public List<Task> findFinishedTasksByUserId(UUID id) {
-        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        UserEntity user = userEntityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         return user.getTasks().stream()
                 .filter(t -> t.getFinishedAt() != null)
                 .toList();
     }
 
     public List<Task> findNotFinishedTasksByUserId(UUID id) {
-        UserEntity user = userEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        UserEntity user = userEntityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         return user.getTasks().stream()
                 .filter(t -> t.getFinishedAt() == null)
                 .toList();
+    }
+
+    private UserEntityDto convertToDto(UserEntity user) {
+        return new UserEntityDto(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getCreatedAt()
+        );
     }
 }
